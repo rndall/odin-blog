@@ -1,8 +1,12 @@
-import express from "express";
+import app from "@/app";
 import { env } from "@/config";
 
-const app = express();
+const PORT = env.PORT;
 
-app.listen(env.PORT, () =>
-	console.log(`Server running at http://localhost:${env.PORT}`),
-);
+const initServer = () => {
+	app.listen(PORT, () => {
+		console.log(`Listening on port ${PORT}`);
+	});
+};
+
+initServer();
