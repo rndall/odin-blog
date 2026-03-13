@@ -1,14 +1,17 @@
 {
-  "name": "odin-blog",
-  "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "dev": "pnpm -r --parallel run dev",
-    "build": "pnpm -r run build"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.32.1"
+	"name": "odin-blog",
+	"private": true,
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"dev": "pnpm -r --parallel run dev",
+		"build": "pnpm -r run build"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.32.1",
+	"devDependencies": {
+		"@biomejs/biome": "2.4.6"
+	}
 }
