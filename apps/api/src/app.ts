@@ -1,5 +1,5 @@
 import compression from "compression"
-import express, { type Express } from "express"
+import express, { type Express, json, urlencoded } from "express"
 import helmet from "helmet"
 
 import { passport } from "@/lib/passport"
@@ -12,6 +12,9 @@ const app: Express = express()
 
 app.use(helmet())
 app.use(compression())
+
+app.use(json())
+app.use(urlencoded({ extended: true }))
 
 app.use(passport.initialize())
 
