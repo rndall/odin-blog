@@ -1,47 +1,51 @@
 import bcrypt from "bcryptjs"
-import { type Prisma, UserRole } from "generated/prisma/client"
+import { UserRole } from "generated/prisma/client"
 import { prisma } from "@/lib/prisma"
 
 async function main() {
+	await prisma.comment.deleteMany()
+	await prisma.post.deleteMany()
+	await prisma.user.deleteMany()
+
 	const hashedPassword = await bcrypt.hash("password", 10)
 
-	const users: Prisma.UserCreateInput[] = [
-		{
-			username: "author",
-			password: hashedPassword,
-			role: UserRole.AUTHOR,
-			posts: {
-				create: [
-					{
-						title: "Published Post Title",
-						content: "Published Post Content",
-						published: true,
-					},
-					{
-						title: "Unpublished Post Title",
-						content: "Unpublished Post Content",
-					},
-				],
-			},
-		},
-		{
-			username: "user",
-			password: hashedPassword,
-			comments: {
-				create: [{ content: "Comment Content", postId: 1 }],
-			},
-		},
-	]
+	await prisma.user.createMany({
+		data: [
+			{ username: "author", password: hashedPassword, role: UserRole.AUTHOR },
+			{ username: "user", password: hashedPassword },
+		],
+	})
 
-	for (const user of users) {
-		await prisma.user.upsert({
-			where: { username: user.username },
-			update: {},
-			create: user,
-		})
-	}
+	const author = await prisma.user.findUniqueOrThrow({
+		where: { username: "author" },
+	})
+	const user = await prisma.user.findUniqueOrThrow({
+		where: { username: "user" },
+	})
 
-	console.log({ users })
+	await prisma.post.createMany({
+		data: [
+			{
+				title: "Published Post Title",
+				content: "Published Post Content",
+				published: true,
+				authorId: author.id,
+			},
+			{
+				title: "Unpublished Post Title",
+				content: "Unpublished Post Content",
+				authorId: author.id,
+			},
+		],
+	})
+
+	const post = await prisma.post.findFirstOrThrow({
+		where: { authorId: author.id },
+	})
+
+	await prisma.comment.create({
+		data: { content: "Comment Content", postId: post.id, userId: user.id },
+	})
 }
 
 main()
