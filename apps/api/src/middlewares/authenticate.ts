@@ -1,4 +1,5 @@
 import type { WeakRequestHandler } from "express-zod-safe"
+import { UnauthorizedError } from "@/errors"
 import { passport } from "@/lib/passport"
 
 export const authenticate: WeakRequestHandler = (req, res, next) => {
@@ -7,10 +8,10 @@ export const authenticate: WeakRequestHandler = (req, res, next) => {
 		{ session: false },
 		(error: Error, user: Express.User | false, info?: { message: string }) => {
 			if (error) {
-				return res.status(500).json({ message: "Server error", error })
+				throw error
 			}
 			if (!user) {
-				return res.status(401).json({ message: info?.message })
+				throw new UnauthorizedError(info?.message)
 			}
 			req.user = user
 			next()

@@ -1,4 +1,5 @@
 import type { Request, Response } from "express"
+import { ForbiddenError, NotFoundError, UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"
 import type {
 	CreatePostRequest,
@@ -10,22 +11,12 @@ import type {
 const checkPostOwnerShip = async (postId: number, userId: number) => {
 	const post = await prisma.post.findUnique({ where: { id: postId } })
 	if (!post) {
-		return { error: "not_found" as const, post: null }
+		throw new NotFoundError("Post not found")
 	}
 	if (post.authorId !== userId) {
-		return { error: "forbidden" as const, post: null }
+		throw new UnauthorizedError()
 	}
-	return { error: null, post }
-}
-
-const handleOwnershipError = (
-	error: "forbidden" | "not_found",
-	res: Response,
-) => {
-	if (error === "not_found")
-		return res.status(404).json({ message: "Post not found" })
-	if (error === "forbidden")
-		return res.status(403).json({ message: "Forbidden" })
+	return post
 }
 
 export const getPosts = async (_req: Request, res: Response) => {
@@ -44,7 +35,7 @@ export const getPostById = async (req: GetPostRequest, res: Response) => {
 	const { id } = req.params
 	const post = await prisma.post.findUnique({ where: { id } })
 	if (!post) {
-		return res.status(404).json({ message: "Post not found" })
+		throw new NotFoundError("Post not found")
 	}
 	res.json(post)
 }
@@ -52,20 +43,14 @@ export const getPostById = async (req: GetPostRequest, res: Response) => {
 export const editPost = async (req: EditPostRequest, res: Response) => {
 	const { id } = req.params
 	const data = req.body
-	const { error } = await checkPostOwnerShip(id, req.user!.id)
-	if (error) {
-		return handleOwnershipError(error, res)
-	}
+	await checkPostOwnerShip(id, req.user!.id)
 	const editedPost = await prisma.post.update({ where: { id }, data })
 	res.json({ post: editedPost })
 }
 
 export const deletePost = async (req: DeletePostRequest, res: Response) => {
 	const { id } = req.params
-	const { error, post } = await checkPostOwnerShip(id, req.user!.id)
-	if (error) {
-		return handleOwnershipError(error, res)
-	}
+	const post = await checkPostOwnerShip(id, req.user!.id)
 	await prisma.post.delete({ where: { id } })
 	return res.json({ message: "Post deleted successfully", post })
 }
