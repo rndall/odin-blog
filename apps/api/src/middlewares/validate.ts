@@ -1,20 +1,27 @@
 import type { NextFunction, Request, Response } from "express"
 import z, { type ZodType } from "zod"
 
-export const validateParams =
-	(schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
-		const result = schema.safeParse(req.params)
-		if (!result.success) {
-			return res.status(400).json(z.treeifyError(result.error))
-		}
-		next()
-	}
+type RequestPart = "params" | "body" | "query"
+type TreeifiedZodError = ReturnType<typeof z.treeifyError>
 
-export const validateBody =
-	(schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
-		const result = schema.safeParse(req.body)
-		if (!result.success) {
-			return res.status(400).json(z.treeifyError(result.error))
+export const validate =
+	(schemas: Partial<Record<RequestPart, ZodType>>) =>
+	(req: Request, res: Response, next: NextFunction) => {
+		const errors: Partial<Record<RequestPart, TreeifiedZodError>> = {}
+
+		for (const [part, schema] of Object.entries(schemas) as [
+			RequestPart,
+			ZodType,
+		][]) {
+			const result = schema.safeParse(req[part])
+			if (!result.success) {
+				errors[part] = z.treeifyError(result.error)
+			}
 		}
+
+		if (Object.keys(errors).length > 0) {
+			return res.status(400).json(errors)
+		}
+
 		next()
 	}
