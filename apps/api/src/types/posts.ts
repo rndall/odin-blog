@@ -4,4 +4,6 @@ import type { IdParamsRequest } from "."
 
 export type CreatePostRequest = ValidatedRequest<{ body: typeof postSchema }>
 export type GetPostRequest = IdParamsRequest
+export type EditPostRequest = ValidatedRequest<{ body: typeof postSchema }> &
+	IdParamsRequest
 export type DeletePostRequest = IdParamsRequest

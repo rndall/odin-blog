@@ -8,5 +8,7 @@ export const requireRole =
 			next()
 		}
 
-		return res.status(403).json({ message: "Forbidden" })
+		return res
+			.status(403)
+			.json({ message: `Role ${role} is required for this action` })
 	}

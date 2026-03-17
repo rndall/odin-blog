@@ -4,6 +4,7 @@ import validate from "express-zod-safe"
 import {
 	createPost,
 	deletePost,
+	editPost,
 	getPostById,
 	getPosts,
 } from "@/controllers/posts"
@@ -21,14 +22,13 @@ router.post(
 	validate({ body: postSchema }),
 	createPost,
 )
-
 router.get("/:id", validate({ params: idSchema }), getPostById)
-router.delete(
+router.put(
 	"/:id",
 	authenticate,
-	requireRole("AUTHOR"),
-	validate({ params: idSchema }),
-	deletePost,
+	validate({ params: idSchema, body: postSchema }),
+	editPost,
 )
+router.delete("/:id", authenticate, validate({ params: idSchema }), deletePost)
 
 export default router

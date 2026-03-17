@@ -1,0 +1,28 @@
+info:
+  name: Edit
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/posts/{{postId}}"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Edited title",
+        "content": "Edited content",
+        "published": false
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: ""
+      value: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
