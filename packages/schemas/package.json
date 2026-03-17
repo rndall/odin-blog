@@ -5,7 +5,8 @@
 	"description": "",
 	"main": "index.js",
 	"exports": {
-		"./auth": "./src/auth.ts"
+		"./auth": "./src/auth.ts",
+		"./posts": "./src/posts.ts"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"

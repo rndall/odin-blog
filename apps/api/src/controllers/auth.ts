@@ -1,14 +1,14 @@
-import type { Login } from "@odin-blog/schemas/auth"
 import bcrypt from "bcryptjs"
-import type { Request, Response } from "express"
+import type { Response } from "express"
 import jwt from "jsonwebtoken"
 import { env } from "@/config/env"
 import { prisma } from "@/lib/prisma"
+import type { LoginRequest } from "@/types/auth"
 
 const JWT_SECRET = env.JWT_SECRET
 
-export const login = async (req: Request, res: Response) => {
-	const { username, password } = req.body as Login
+export const login = async (req: LoginRequest, res: Response) => {
+	const { username, password } = req.body
 
 	const user = await prisma.user.findUnique({ where: { username } })
 	const isValid = user && (await bcrypt.compare(password, user.password))
@@ -18,9 +18,11 @@ export const login = async (req: Request, res: Response) => {
 	}
 
 	const payload = { id: user.id }
-	jwt.sign(payload, JWT_SECRET, (err, token) => {
-		if (err) {
-			return res.status(500).json({ message: "Failed to generate token" })
+	jwt.sign(payload, JWT_SECRET, (error, token) => {
+		if (error) {
+			return res
+				.status(500)
+				.json({ message: "Failed to generate token", error })
 		}
 		res.json({ token })
 	})
