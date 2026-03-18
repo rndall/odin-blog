@@ -7,7 +7,7 @@ export const requireRole =
 	(req, _res, next) => {
 		// biome-ignore lint/style/noNonNullAssertion: Validated user through auth middleware
 		if (req.user!.role === role) {
-			next()
+			return next()
 		}
 
 		throw new UnauthorizedError()
