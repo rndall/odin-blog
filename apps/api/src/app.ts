@@ -7,6 +7,7 @@ import { errorHandler } from "@/middlewares/errorHandler"
 
 import authRouter from "@/routes/auth"
 import postsRouter from "@/routes/posts"
+import userRouter from "@/routes/user"
 
 const app: Express = express()
 
@@ -20,6 +21,7 @@ app.use(passport.initialize())
 
 app.use("/", authRouter)
 app.use("/posts", postsRouter)
+app.use("/user", userRouter)
 
 app.use(errorHandler)
 
