@@ -32,8 +32,8 @@ export const createPost = async (req: CreatePostRequest, res: Response) => {
 }
 
 export const getPostById = async (req: GetPostRequest, res: Response) => {
-	const { id } = req.params
-	const post = await prisma.post.findUnique({ where: { id } })
+	const { postId } = req.params
+	const post = await prisma.post.findUnique({ where: { id: postId } })
 	if (!post) {
 		throw new NotFoundError("Post not found")
 	}
@@ -41,16 +41,16 @@ export const getPostById = async (req: GetPostRequest, res: Response) => {
 }
 
 export const editPost = async (req: EditPostRequest, res: Response) => {
-	const { id } = req.params
+	const { postId } = req.params
 	const data = req.body
-	await checkPostOwnership(id, req.user!.id)
-	const editedPost = await prisma.post.update({ where: { id }, data })
+	await checkPostOwnership(postId, req.user!.id)
+	const editedPost = await prisma.post.update({ where: { id: postId }, data })
 	res.json({ message: "Post edited successfully", post: editedPost })
 }
 
 export const deletePost = async (req: DeletePostRequest, res: Response) => {
-	const { id } = req.params
-	await checkPostOwnership(id, req.user!.id)
-	const post = await prisma.post.delete({ where: { id } })
+	const { postId } = req.params
+	await checkPostOwnership(postId, req.user!.id)
+	const post = await prisma.post.delete({ where: { id: postId } })
 	return res.json({ message: "Post deleted successfully", post })
 }

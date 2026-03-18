@@ -23,20 +23,20 @@ router.post(
 	validate({ body: postSchema }),
 	createPost,
 )
-router.get("/:id", validate({ params: idParamsSchema }), getPostById)
+router.get("/:postId", validate({ params: idParamsSchema }), getPostById)
 router.put(
-	"/:id",
+	"/:postId",
 	authenticate,
 	validate({ params: idParamsSchema, body: postSchema }),
 	editPost,
 )
 router.delete(
-	"/:id",
+	"/:postId",
 	authenticate,
 	validate({ params: idParamsSchema }),
 	deletePost,
 )
 
-router.use("/:id/comments", commentsRouter)
+router.use("/:postId/comments", commentsRouter)
 
 export default router

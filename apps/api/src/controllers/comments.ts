@@ -31,9 +31,9 @@ const checkCommentOwnership = async ({
 }
 
 export const getComments = async (req: GetCommentsRequest, res: Response) => {
-	const { id } = req.params
+	const { postId } = req.params
 	const comments = await prisma.comment.findMany({
-		where: { postId: id },
+		where: { postId },
 		orderBy: { createdAt: "asc" },
 		omit: { postId: true },
 	})
@@ -44,7 +44,7 @@ export const createComment = async (
 	req: CreateCommentRequest,
 	res: Response,
 ) => {
-	const { id: postId } = req.params
+	const { postId } = req.params
 	const comment = await prisma.comment.create({
 		data: { ...req.body, postId, userId: req.user!.id },
 	})
@@ -52,7 +52,7 @@ export const createComment = async (
 }
 
 export const getComment = async (req: GetCommentRequest, res: Response) => {
-	const { id: postId, commentId } = req.params
+	const { postId, commentId } = req.params
 	const comment = await prisma.comment.findUnique({
 		where: { id: commentId, postId },
 	})
@@ -63,7 +63,7 @@ export const getComment = async (req: GetCommentRequest, res: Response) => {
 }
 
 export const editComment = async (req: EditCommentRequest, res: Response) => {
-	const { id: postId, commentId } = req.params
+	const { postId, commentId } = req.params
 	const userId = req.user!.id
 	const data = req.body
 	await checkCommentOwnership({ commentId, postId, userId })
@@ -78,7 +78,7 @@ export const deleteComment = async (
 	req: DeleteCommentRequest,
 	res: Response,
 ) => {
-	const { id: postId, commentId } = req.params
+	const { postId, commentId } = req.params
 	const userId = req.user!.id
 	await checkCommentOwnership({ commentId, postId, userId })
 	const comment = await prisma.comment.delete({
