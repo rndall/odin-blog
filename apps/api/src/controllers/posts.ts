@@ -20,7 +20,10 @@ const checkPostOwnership = async (postId: number, userId: number) => {
 }
 
 export const getPosts = async (_req: Request, res: Response) => {
-	const posts = await prisma.post.findMany()
+	const posts = await prisma.post.findMany({
+		where: { published: true },
+		orderBy: { createdAt: "asc" },
+	})
 	res.json(posts)
 }
 
