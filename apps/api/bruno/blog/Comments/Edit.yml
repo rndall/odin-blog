@@ -5,21 +5,14 @@ info:
 
 http:
   method: PUT
-  url: "{{baseUrl}}/posts/{{postId}}"
+  url: "{{baseUrl}}/posts/{{postId}}/comments/{{commentId}}"
   body:
     type: json
     data: |-
       {
-        "title": "Edited title",
-        "content": "Edited content",
-        "published": false
+        "content": "Edited comment"
       }
   auth: inherit
-
-runtime:
-  variables:
-    - name: ""
-      value: ""
 
 settings:
   encodeUrl: true

@@ -1,11 +1,11 @@
 info:
-  name: Delete
+  name: List
   type: http
-  seq: 5
+  seq: 1
 
 http:
-  method: DELETE
-  url: "{{baseUrl}}/posts/{{postId}}"
+  method: GET
+  url: "{{baseUrl}}/posts/{{postId}}/comments"
   auth: inherit
 
 settings:

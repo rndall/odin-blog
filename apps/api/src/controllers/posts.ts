@@ -9,7 +9,7 @@ import type {
 	GetPostRequest,
 } from "@/types/posts"
 
-const checkPostOwnerShip = async (postId: number, userId: number) => {
+const checkPostOwnership = async (postId: number, userId: number) => {
 	const post = await prisma.post.findUnique({ where: { id: postId } })
 	if (!post) {
 		throw new NotFoundError("Post not found")
@@ -17,7 +17,6 @@ const checkPostOwnerShip = async (postId: number, userId: number) => {
 	if (post.authorId !== userId) {
 		throw new UnauthorizedError()
 	}
-	return post
 }
 
 export const getPosts = async (_req: Request, res: Response) => {
@@ -44,14 +43,14 @@ export const getPostById = async (req: GetPostRequest, res: Response) => {
 export const editPost = async (req: EditPostRequest, res: Response) => {
 	const { id } = req.params
 	const data = req.body
-	await checkPostOwnerShip(id, req.user!.id)
+	await checkPostOwnership(id, req.user!.id)
 	const editedPost = await prisma.post.update({ where: { id }, data })
-	res.json({ post: editedPost })
+	res.json({ message: "Post edited successfully", post: editedPost })
 }
 
 export const deletePost = async (req: DeletePostRequest, res: Response) => {
 	const { id } = req.params
-	const post = await checkPostOwnerShip(id, req.user!.id)
-	await prisma.post.delete({ where: { id } })
+	await checkPostOwnership(id, req.user!.id)
+	const post = await prisma.post.delete({ where: { id } })
 	return res.json({ message: "Post deleted successfully", post })
 }

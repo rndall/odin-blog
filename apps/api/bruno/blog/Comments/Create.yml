@@ -5,13 +5,12 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/posts"
+  url: "{{baseUrl}}/posts/{{postId}}/comments"
   body:
     type: json
     data: |-
       {
-        "title": "title",
-        "content": "content"
+        "content": "Hi"
       }
   auth: inherit
 

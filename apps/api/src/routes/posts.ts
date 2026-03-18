@@ -10,7 +10,8 @@ import {
 } from "@/controllers/posts"
 import { authenticate } from "@/middlewares/authenticate"
 import { requireRole } from "@/middlewares/authorize"
-import { idSchema } from "@/schemas"
+import commentsRouter from "@/routes/comments"
+import { idParamsSchema } from "@/schemas"
 
 const router: Router = Router()
 
@@ -22,13 +23,20 @@ router.post(
 	validate({ body: postSchema }),
 	createPost,
 )
-router.get("/:id", validate({ params: idSchema }), getPostById)
+router.get("/:id", validate({ params: idParamsSchema }), getPostById)
 router.put(
 	"/:id",
 	authenticate,
-	validate({ params: idSchema, body: postSchema }),
+	validate({ params: idParamsSchema, body: postSchema }),
 	editPost,
 )
-router.delete("/:id", authenticate, validate({ params: idSchema }), deletePost)
+router.delete(
+	"/:id",
+	authenticate,
+	validate({ params: idParamsSchema }),
+	deletePost,
+)
+
+router.use("/:id/comments", commentsRouter)
 
 export default router
