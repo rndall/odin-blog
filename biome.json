@@ -20,8 +20,8 @@
 				"useSortedClasses": {
 					"level": "error",
 					"options": {
-						"attributes": ["classList"],
-						"functions": ["clsx", "cva", "tw", "tw.*"]
+						"attributes": ["className", "class"],
+						"functions": ["clsx", "cva", "tw", "tw.*", "cn"]
 					}
 				}
 			}
