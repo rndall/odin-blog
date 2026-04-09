@@ -29,7 +29,7 @@
 		</ul>
 	</nav>
 
-	<div>
+	<div class="flex gap-4">
 		<Button size="icon" variant="ghost" aria-label="search">
 			<HugeiconsIcon class="text-primary" strokeWidth={3} icon={Search01Icon} />
 		</Button>
