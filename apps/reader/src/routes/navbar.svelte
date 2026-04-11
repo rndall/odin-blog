@@ -6,11 +6,14 @@
 	import { Button } from '$lib/components/ui/button'
 </script>
 
-<header class="container flex items-center justify-between bg-[#fefefe] py-4">
-	<a href={resolve('/')} class="my-2 font-serif text-3xl font-bold text-primary italic"
-		>The Digital Atelier</a
-	>
-	<nav>
+<header class="container grid grid-cols-3 items-center bg-[#fefefe] py-4">
+	<div class="flex justify-start">
+		<a href={resolve('/')} class="my-2 font-serif text-3xl font-bold text-primary italic"
+			>The Digital Atelier</a
+		>
+	</div>
+
+	<nav class="flex justify-center">
 		<ul
 			class="flex font-serif **:text-base **:font-bold **:text-muted-foreground **:decoration-2 **:underline-offset-8 **:aria-current:text-primary **:aria-current:underline"
 		>
@@ -29,7 +32,7 @@
 		</ul>
 	</nav>
 
-	<div class="flex gap-4">
+	<div class="flex justify-end gap-4">
 		<Button size="icon" variant="ghost" aria-label="search">
 			<HugeiconsIcon class="text-primary" strokeWidth={3} icon={Search01Icon} />
 		</Button>
