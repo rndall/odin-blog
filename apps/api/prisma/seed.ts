@@ -35,6 +35,7 @@ async function main() {
 				content: "Published Post Content",
 				published: true,
 				authorId: author.id,
+				publishedAt: new Date(),
 			},
 			{
 				title: "Unpublished Post Title",
