@@ -33,7 +33,7 @@ export const getPosts = async (_req: Request, res: Response) => {
 			},
 			publishedAt: true,
 		},
-		orderBy: { createdAt: "asc" },
+		orderBy: { publishedAt: "desc" },
 	})
 	res.json(posts)
 }
