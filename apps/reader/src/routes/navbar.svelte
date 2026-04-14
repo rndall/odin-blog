@@ -8,14 +8,14 @@
 
 <header class="container grid grid-cols-3 items-center bg-[#fefefe] py-4">
 	<div class="flex justify-start">
-		<a href={resolve('/')} class="my-2 font-serif text-3xl font-bold text-primary italic"
+		<a href={resolve('/')} class="my-2 font-serif text-3xl text-primary italic"
 			>The Digital Atelier</a
 		>
 	</div>
 
 	<nav class="flex justify-center">
 		<ul
-			class="flex font-serif **:text-base **:font-bold **:text-muted-foreground **:decoration-2 **:underline-offset-8 **:aria-current:text-primary **:aria-current:underline"
+			class="flex font-serif **:text-base **:text-muted-foreground **:decoration-2 **:underline-offset-8 **:aria-current:text-primary **:aria-current:underline"
 		>
 			<li>
 				<Button aria-current={page.url.pathname === '/'} href={resolve('/')} variant="link"
