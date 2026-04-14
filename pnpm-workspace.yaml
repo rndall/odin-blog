@@ -2,6 +2,7 @@ packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
+  '@hugeicons/svelte': true
   '@prisma/engines': true
   esbuild: true
   prisma: true
