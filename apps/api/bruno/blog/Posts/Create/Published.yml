@@ -1,0 +1,23 @@
+info:
+  name: Published
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/posts"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Lorem ipsum dolor sit amet.",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum mattis neque, vitae consequat neque ultrices quis. Sed mollis posuere turpis, eget gravida felis suscipit nec. Nulla tempor lobortis nunc at mollis. Integer in nulla sem. Etiam vel leo nunc. Nullam at suscipit magna. Vivamus consequat pharetra nisl, mollis posuere nunc scelerisque ut.",
+        "published": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
