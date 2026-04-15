@@ -8,7 +8,7 @@
 	let { showFooterTitle = true }: Props = $props()
 </script>
 
-<footer class="container my-10 space-y-7 text-center">
+<footer class="my-10 space-y-7 text-center">
 	{#if showFooterTitle}
 		<p class="font-serif text-xl text-primary italic">The Digital Atelier</p>
 	{/if}

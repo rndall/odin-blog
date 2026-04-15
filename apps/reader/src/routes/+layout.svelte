@@ -17,11 +17,15 @@
 </svelte:head>
 
 <div class="flex min-h-dvh flex-col">
-	<Navbar />
+	<div class="px-6 py-4">
+		<Navbar />
+	</div>
 	<main class="flex-1 bg-[#f9f9fc]">
 		<div class="container">
 			{@render children()}
 		</div>
 	</main>
-	<Footer showFooterTitle={page.data.showFooterTitle} />
+	<div>
+		<Footer showFooterTitle={page.data.showFooterTitle} />
+	</div>
 </div>

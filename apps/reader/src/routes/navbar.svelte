@@ -6,7 +6,7 @@
 	import { Button } from '$lib/components/ui/button'
 </script>
 
-<header class="container grid grid-cols-3 items-center bg-[#fefefe] py-4">
+<header class="grid grid-cols-3 items-center bg-[#fefefe]">
 	<div class="flex justify-start">
 		<a href={resolve('/')} class="my-2 font-serif text-3xl text-primary italic"
 			>The Digital Atelier</a
