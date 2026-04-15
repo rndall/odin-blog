@@ -2,6 +2,7 @@
 	import './layout.css'
 	import { page } from '$app/state'
 	import favicon from '$lib/assets/favicon.svg'
+	import Footer from './footer.svelte'
 	import Navbar from './navbar.svelte'
 
 	const pageTitle = $derived(page.data.title)
@@ -22,4 +23,5 @@
 			{@render children()}
 		</div>
 	</main>
+	<Footer showFooterTitle={page.data.showFooterTitle} />
 </div>

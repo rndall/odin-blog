@@ -17,9 +17,9 @@
 	const remainingPosts = $derived(data.posts.slice(4))
 </script>
 
-<div class="flex flex-col gap-10 py-4 *:my-10">
+<div class="mb-30 flex flex-col gap-10 py-4 *:my-10">
 	<section>
-		<Card.Root class="mx-auto max-w-2xl rounded-sm px-10 py-12 text-center shadow-2xs ring-0">
+		<Card.Root class="mx-auto max-w-2xl rounded-sm px-10 py-12 text-center shadow-xs ring-0">
 			<Card.Header>
 				<Card.Title class="text-6xl font-normal italic">
 					{firstPost.title}
