@@ -5,5 +5,4 @@ export const idParamsSchema = z.object({
 		.number("ID must be a number")
 		.positive("ID must be a positive number"),
 })
-
 export type IdParams = z.infer<typeof idParamsSchema>

@@ -1,3 +1,4 @@
+import { cursorPaginationQuerySchema } from "@odin-blog/schemas/pagination"
 import { postSchema } from "@odin-blog/schemas/posts"
 import { Router } from "express"
 import validate from "express-zod-safe"
@@ -15,7 +16,7 @@ import { idParamsSchema } from "@/schemas"
 
 const router: Router = Router()
 
-router.get("/", getPosts)
+router.get("/", validate({ query: cursorPaginationQuerySchema }), getPosts)
 router.post(
 	"/",
 	authenticate,

@@ -6,6 +6,11 @@ info:
 http:
   method: GET
   url: "{{baseUrl}}/posts"
+  params:
+    - name: limit
+      value: ""
+      type: query
+      disabled: true
   auth: inherit
 
 settings:

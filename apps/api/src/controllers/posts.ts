@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Validated user through auth middleware */
-import type { Request, Response } from "express"
+import type { Response } from "express"
 import { NotFoundError, UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"
 import type {
@@ -7,7 +7,9 @@ import type {
 	DeletePostRequest,
 	EditPostRequest,
 	GetPostRequest,
+	GetPostsRequest,
 } from "@/types/posts"
+import { encodeCursor } from "@/utils/pagination"
 
 const checkPostOwnership = async (postId: number, userId: number) => {
 	const post = await prisma.post.findUnique({ where: { id: postId } })
@@ -19,8 +21,17 @@ const checkPostOwnership = async (postId: number, userId: number) => {
 	}
 }
 
-export const getPosts = async (_req: Request, res: Response) => {
+export const getPosts = async (req: GetPostsRequest, res: Response) => {
+	const { limit, cursor } = req.query
+
 	const posts = await prisma.post.findMany({
+		take: limit + 1,
+		...(cursor && {
+			skip: 1,
+			cursor: {
+				id: cursor.id,
+			},
+		}),
 		where: { published: true },
 		select: {
 			id: true,
@@ -33,9 +44,18 @@ export const getPosts = async (_req: Request, res: Response) => {
 			},
 			publishedAt: true,
 		},
-		orderBy: { publishedAt: "desc" },
+		orderBy: [{ publishedAt: "desc" }, { id: "desc" }],
 	})
-	res.json(posts)
+
+	const hasMore = posts.length > limit
+	const page = hasMore ? posts.slice(0, limit) : posts
+	const lastPost = page.at(-1)
+	const nextCursor =
+		hasMore && lastPost?.publishedAt
+			? encodeCursor({ id: lastPost.id, publishedAt: lastPost.publishedAt })
+			: null
+
+	res.json({ posts: page, nextCursor })
 }
 
 export const createPost = async (req: CreatePostRequest, res: Response) => {
