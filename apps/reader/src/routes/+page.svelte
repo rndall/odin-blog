@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { Post } from '@odin-blog/shared/posts'
+	import { resolve } from '$app/paths'
+	import Button from '$lib/components/ui/button/button.svelte'
 	import * as Card from '$lib/components/ui/card'
 	import * as Item from '$lib/components/ui/item'
 	import { Separator } from '$lib/components/ui/separator'
@@ -71,7 +73,7 @@
 		{/each}
 	</section>
 
-	<section class="mx-auto w-full max-w-5xl">
+	<section class="flex flex-col items-center gap-10">
 		{#snippet postCard(post: Post)}
 			<Item.Root>
 				<Item.Header class="font-semibold text-muted-foreground uppercase">
@@ -92,10 +94,12 @@
 			</Item.Root>
 		{/snippet}
 
-		<Item.Group class="grid grid-cols-1 sm:grid-cols-2">
+		<Item.Group class="grid max-w-5xl grid-cols-1 sm:grid-cols-2">
 			{#each remainingPosts as post}
 				{@render postCard(post)}
 			{/each}
 		</Item.Group>
+
+		<Button variant="outline" href={resolve('/archive')}>View Full Archive</Button>
 	</section>
 </div>
