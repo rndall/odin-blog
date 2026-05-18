@@ -1,6 +1,8 @@
 import { commentSchema } from "@odin-blog/schemas/comments"
+
 import { Router } from "express"
 import validate from "express-zod-safe"
+
 import {
 	createComment,
 	deleteComment,
@@ -8,7 +10,9 @@ import {
 	getComment,
 	getComments,
 } from "@/controllers/comments"
+
 import { authenticate } from "@/middlewares/authenticate"
+
 import { idParamsSchema } from "@/schemas"
 import { postCommentParamsSchema } from "@/schemas/comments"
 

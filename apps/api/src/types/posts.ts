@@ -1,10 +1,10 @@
-import type { cursorPaginationQuerySchema } from "@odin-blog/schemas/pagination"
 import type { postSchema } from "@odin-blog/schemas/posts"
 import type { ValidatedRequest } from "express-zod-safe"
+import type { getPostsQuery } from "@/schemas/posts"
 import type { IdParamsRequest } from "."
 
 export type GetPostsRequest = ValidatedRequest<{
-	query: typeof cursorPaginationQuerySchema
+	query: typeof getPostsQuery
 }>
 export type CreatePostRequest = ValidatedRequest<{ body: typeof postSchema }>
 export type GetPostRequest = IdParamsRequest

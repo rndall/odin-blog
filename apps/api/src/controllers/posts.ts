@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Validated user through auth middleware */
 import type { Response } from "express"
+
 import { NotFoundError, UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"
 import type {
@@ -22,7 +23,7 @@ const checkPostOwnership = async (postId: number, userId: number) => {
 }
 
 export const getPosts = async (req: GetPostsRequest, res: Response) => {
-	const { limit, cursor } = req.query
+	const { limit, cursor, sort } = req.query
 
 	const posts = await prisma.post.findMany({
 		take: limit + 1,
@@ -44,7 +45,7 @@ export const getPosts = async (req: GetPostsRequest, res: Response) => {
 			},
 			publishedAt: true,
 		},
-		orderBy: [{ publishedAt: "desc" }, { id: "desc" }],
+		orderBy: sort,
 	})
 
 	const hasMore = posts.length > limit

@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Validated user through auth middleware */
 import type { Response } from "express"
+
 import { NotFoundError, UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"
 import type {

@@ -1,5 +1,7 @@
 import { Router } from "express"
+
 import { getPosts } from "@/controllers/user"
+
 import { authenticate } from "@/middlewares/authenticate"
 import { requireRole } from "@/middlewares/authorize"
 
