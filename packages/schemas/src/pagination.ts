@@ -8,12 +8,14 @@ export type CursorPayload = z.infer<typeof cursorPayloadSchema>
 
 export const cursorPaginationQuerySchema = z.object({
 	limit: z.coerce.number().positive().max(100).default(10),
-	cursor: z
-		.string()
-		.pipe(
-			z.transform((val, ctx) => {
+	cursor: z.preprocess(
+		(val) => (val === "" ? undefined : val),
+		z
+			.string()
+			.transform((val, ctx) => {
 				try {
 					const decoded = Buffer.from(val, "base64url").toString("utf8")
+
 					return cursorPayloadSchema.parse(JSON.parse(decoded))
 				} catch {
 					ctx.issues.push({
@@ -21,10 +23,11 @@ export const cursorPaginationQuerySchema = z.object({
 						message: "Invalid cursor",
 						input: val,
 					})
+
 					return z.NEVER
 				}
-			}),
-		)
-		.optional(),
+			})
+			.optional(),
+	),
 })
 export type CursorPaginationQuery = z.infer<typeof cursorPaginationQuerySchema>
