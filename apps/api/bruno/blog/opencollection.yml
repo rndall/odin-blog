@@ -17,11 +17,11 @@ config:
 request:
   variables:
     - name: postId
-      value: "1"
+      value: "10"
   scripts:
     - type: before-request
       code: |-
-        const token = bru.getEnvVar("token")
+        const token = bru.getVar("token")
 
         if (!token) return
 
