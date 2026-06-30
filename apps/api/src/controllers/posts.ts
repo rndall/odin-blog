@@ -1,5 +1,7 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Validated user through auth middleware */
 import type { Response } from "express"
+import { nanoid } from "nanoid"
+import slugify from "slugify"
 
 import { NotFoundError, UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"
@@ -60,8 +62,10 @@ export const getPosts = async (req: GetPostsRequest, res: Response) => {
 }
 
 export const createPost = async (req: CreatePostRequest, res: Response) => {
+	const { title } = req.body
+	const slug = `${slugify(title, { lower: true, strict: true, trim: true })}-${nanoid(10)}`
 	const post = await prisma.post.create({
-		data: { ...req.body, authorId: req.user!.id },
+		data: { ...req.body, authorId: req.user!.id, slug },
 	})
 	res.status(201).json({ message: "Post created", post })
 }

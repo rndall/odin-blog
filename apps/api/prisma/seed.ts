@@ -32,6 +32,7 @@ async function main() {
 		data: [
 			{
 				title: "Published Post Title",
+				slug: "published-post-title",
 				content: "Published Post Content",
 				published: true,
 				authorId: author.id,
@@ -39,6 +40,7 @@ async function main() {
 			},
 			{
 				title: "Unpublished Post Title",
+				slug: "unpublished-post-title",
 				content: "Unpublished Post Content",
 				authorId: author.id,
 			},
