@@ -37,7 +37,7 @@
 	<section class="flex flex-col gap-12">
 		{#snippet postArchive(post: Post)}
 			<li>
-				<a class="group" href={resolve(`/archive/${post.title}`)}>
+				<a class="group" href={resolve(`/archive/${post.slug}`)}>
 					<Item.Root class="gap-1 p-0">
 						<Item.Header>
 							<Tooltip.Root>

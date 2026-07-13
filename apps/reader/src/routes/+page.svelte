@@ -41,65 +41,69 @@
 		</Card.Root>
 	</section>
 
-	<section class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-		{#snippet postCard(post: Post)}
-			<Card.Root
-				class="bg-transparent shadow-none ring-0 transition hover:translate-y-4 hover:bg-secondary-foreground/5"
-			>
-				<Card.Header>
-					<Card.Title class="text-3xl">
-						{post.title}
-					</Card.Title>
-				</Card.Header>
-				<Card.Content class="line-clamp-4 flex-1 text-muted-foreground">
-					<p>{post.content}</p>
-				</Card.Content>
-				<div class="px-6">
-					<Separator />
-				</div>
-				<Card.Footer class="justify-between text-muted-foreground">
-					<p class="font-medium uppercase">{post.author.fullName}</p>
-					{#if dayjs().isSame(post.publishedAt, 'year')}
-						<p>{dayjs(post.publishedAt).format('D MMM')}</p>
-					{:else}
-						<p>{dayjs(post.publishedAt).format('D MMM YYYY')}</p>
-					{/if}
-				</Card.Footer>
-			</Card.Root>
-		{/snippet}
-
-		{#each nextThreePosts as post}
-			{@render postCard(post)}
-		{/each}
-	</section>
-
-	<section class="flex flex-col items-center gap-10">
-		{#snippet postCard(post: Post)}
-			<Item.Root>
-				<Item.Header class="font-semibold text-muted-foreground uppercase">
-					{#if dayjs().isSame(post.publishedAt, 'year')}
-						<p>{dayjs(post.publishedAt).format('MMM D')}</p>
-					{:else}
-						<p>{dayjs(post.publishedAt).format('MMM D YYYY')}</p>
-					{/if}
-				</Item.Header>
-				<Item.Content>
-					<Item.Title class="text-2xl font-normal">
-						{post.title}
-					</Item.Title>
-					<Item.Description class="line-clamp-1">
+	{#if nextThreePosts.length > 0}
+		<section class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+			{#snippet postCard(post: Post)}
+				<Card.Root
+					class="bg-transparent shadow-none ring-0 transition hover:translate-y-4 hover:bg-secondary-foreground/5"
+				>
+					<Card.Header>
+						<Card.Title class="text-3xl">
+							{post.title}
+						</Card.Title>
+					</Card.Header>
+					<Card.Content class="line-clamp-4 flex-1 text-muted-foreground">
 						<p>{post.content}</p>
-					</Item.Description>
-				</Item.Content>
-			</Item.Root>
-		{/snippet}
+					</Card.Content>
+					<div class="px-6">
+						<Separator />
+					</div>
+					<Card.Footer class="justify-between text-muted-foreground">
+						<p class="font-medium uppercase">{post.author.fullName}</p>
+						{#if dayjs().isSame(post.publishedAt, 'year')}
+							<p>{dayjs(post.publishedAt).format('D MMM')}</p>
+						{:else}
+							<p>{dayjs(post.publishedAt).format('D MMM YYYY')}</p>
+						{/if}
+					</Card.Footer>
+				</Card.Root>
+			{/snippet}
 
-		<Item.Group class="grid max-w-5xl grid-cols-1 sm:grid-cols-2">
-			{#each remainingPosts as post}
+			{#each nextThreePosts as post}
 				{@render postCard(post)}
 			{/each}
-		</Item.Group>
+		</section>
+	{/if}
 
-		<Button variant="outline" href={resolve('/archive')}>View Full Archive</Button>
-	</section>
+	{#if remainingPosts.length > 0}
+		<section class="flex flex-col items-center gap-10">
+			{#snippet postCard(post: Post)}
+				<Item.Root>
+					<Item.Header class="font-semibold text-muted-foreground uppercase">
+						{#if dayjs().isSame(post.publishedAt, 'year')}
+							<p>{dayjs(post.publishedAt).format('MMM D')}</p>
+						{:else}
+							<p>{dayjs(post.publishedAt).format('MMM D YYYY')}</p>
+						{/if}
+					</Item.Header>
+					<Item.Content>
+						<Item.Title class="text-2xl font-normal">
+							{post.title}
+						</Item.Title>
+						<Item.Description class="line-clamp-1">
+							<p>{post.content}</p>
+						</Item.Description>
+					</Item.Content>
+				</Item.Root>
+			{/snippet}
+
+			<Item.Group class="grid max-w-5xl grid-cols-1 sm:grid-cols-2">
+				{#each remainingPosts as post}
+					{@render postCard(post)}
+				{/each}
+			</Item.Group>
+
+			<Button variant="outline" href={resolve('/archive')}>View Full Archive</Button>
+		</section>
+	{/if}
 </div>
