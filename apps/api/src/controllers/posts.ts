@@ -14,8 +14,8 @@ import type {
 } from "@/types/posts"
 import { encodeCursor } from "@/utils/pagination"
 
-const checkPostOwnership = async (postId: number, userId: number) => {
-	const post = await prisma.post.findUnique({ where: { id: postId } })
+const checkPostOwnership = async (slug: string, userId: number) => {
+	const post = await prisma.post.findUnique({ where: { slug } })
 	if (!post) {
 		throw new NotFoundError("Post not found")
 	}
@@ -46,6 +46,7 @@ export const getPosts = async (req: GetPostsRequest, res: Response) => {
 				},
 			},
 			publishedAt: true,
+			slug: true,
 		},
 		orderBy: sort,
 	})
@@ -70,9 +71,9 @@ export const createPost = async (req: CreatePostRequest, res: Response) => {
 	res.status(201).json({ message: "Post created", post })
 }
 
-export const getPostById = async (req: GetPostRequest, res: Response) => {
-	const { postId } = req.params
-	const post = await prisma.post.findUnique({ where: { id: postId } })
+export const getPostBySlug = async (req: GetPostRequest, res: Response) => {
+	const { slug } = req.params
+	const post = await prisma.post.findUnique({ where: { slug } })
 	if (!post) {
 		throw new NotFoundError("Post not found")
 	}
@@ -80,16 +81,16 @@ export const getPostById = async (req: GetPostRequest, res: Response) => {
 }
 
 export const editPost = async (req: EditPostRequest, res: Response) => {
-	const { postId } = req.params
+	const { slug } = req.params
 	const data = req.body
-	await checkPostOwnership(postId, req.user!.id)
-	const editedPost = await prisma.post.update({ where: { id: postId }, data })
+	await checkPostOwnership(slug, req.user!.id)
+	const editedPost = await prisma.post.update({ where: { slug }, data })
 	res.json({ message: "Post edited successfully", post: editedPost })
 }
 
 export const deletePost = async (req: DeletePostRequest, res: Response) => {
-	const { postId } = req.params
-	await checkPostOwnership(postId, req.user!.id)
-	const post = await prisma.post.delete({ where: { id: postId } })
+	const { slug } = req.params
+	await checkPostOwnership(slug, req.user!.id)
+	const post = await prisma.post.delete({ where: { slug } })
 	return res.json({ message: "Post deleted successfully", post })
 }

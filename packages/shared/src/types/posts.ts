@@ -8,4 +8,5 @@ export interface Post {
 	content: string
 	author: Author
 	publishedAt: string
+	slug: string
 }

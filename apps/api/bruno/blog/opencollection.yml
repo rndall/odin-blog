@@ -16,8 +16,8 @@ config:
 
 request:
   variables:
-    - name: postId
-      value: "10"
+    - name: postSlug
+      value: published-post-title
   scripts:
     - type: before-request
       code: |-

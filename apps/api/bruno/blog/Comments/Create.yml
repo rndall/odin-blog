@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/posts/{{postId}}/comments"
+  url: "{{baseUrl}}/posts/{{postSlug}}/comments"
   body:
     type: json
     data: |-

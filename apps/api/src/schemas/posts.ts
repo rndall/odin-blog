@@ -31,3 +31,7 @@ export const postsSortQuerySchema = z.object({
 export const getPostsQuery = postsSortQuerySchema.extend(
 	cursorPaginationQuerySchema.shape,
 )
+
+export const postSlugParamsSchema = z.object({
+	slug: z.string().min(1, "Slug is required"),
+})
