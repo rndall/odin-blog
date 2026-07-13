@@ -16,6 +16,7 @@ async function main() {
 				password: hashedPassword,
 				role: UserRole.AUTHOR,
 				fullName: "Author 1",
+				bio: "This is the bio of Author 1",
 			},
 			{ username: "user", password: hashedPassword, fullName: "User 1" },
 		],

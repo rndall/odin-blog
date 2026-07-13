@@ -6,5 +6,5 @@ export interface PostComment {
 	postId: number
 	createdAt: string
 	updatedAt: string
-	user: User
+	user: Omit<User, "bio">
 }

@@ -7,8 +7,8 @@
 	let { data }: PageProps = $props()
 </script>
 
-<div class="mx-auto flex max-w-2xl flex-col gap-12">
-	<article>
+<div class="mx-auto flex max-w-2xl flex-col gap-16">
+	<article class="flex flex-col gap-12">
 		<div class="my-6 flex flex-col items-center gap-4 text-center">
 			<h1 class="font-serif text-5xl italic">{data.post.title}</h1>
 			<div
@@ -23,6 +23,13 @@
 			{@html data.post.content}
 		</div>
 	</article>
+
+	<Item.Root>
+		<Item.Content>
+			<Item.Title class="font-sans font-bold">{data.post.author.fullName}</Item.Title>
+			<Item.Description>{data.post.author.bio}</Item.Description>
+		</Item.Content>
+	</Item.Root>
 
 	<section class="flex flex-col gap-12">
 		<h2 class="font-serif text-3xl italic">Dialogue</h2>

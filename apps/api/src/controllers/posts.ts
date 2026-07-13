@@ -90,6 +90,7 @@ export const getPostBySlug = async (req: GetPostRequest, res: Response) => {
 					id: true,
 					username: true,
 					fullName: true,
+					bio: true,
 				},
 			},
 		},
