@@ -1,12 +1,11 @@
-interface Author {
-	fullName: string
-}
+import type { User } from "./users"
 
 export interface Post {
 	id: number
 	title: string
 	content: string
-	author: Author
+	author: User
 	publishedAt: string
+	published: boolean
 	slug: string
 }

@@ -42,9 +42,12 @@ export const getPosts = async (req: GetPostsRequest, res: Response) => {
 			content: true,
 			author: {
 				select: {
+					id: true,
+					username: true,
 					fullName: true,
 				},
 			},
+			published: true,
 			publishedAt: true,
 			slug: true,
 		},
@@ -73,7 +76,24 @@ export const createPost = async (req: CreatePostRequest, res: Response) => {
 
 export const getPostBySlug = async (req: GetPostRequest, res: Response) => {
 	const { slug } = req.params
-	const post = await prisma.post.findUnique({ where: { slug } })
+	const post = await prisma.post.findUnique({
+		where: { slug },
+		select: {
+			id: true,
+			title: true,
+			content: true,
+			published: true,
+			publishedAt: true,
+			slug: true,
+			author: {
+				select: {
+					id: true,
+					username: true,
+					fullName: true,
+				},
+			},
+		},
+	})
 	if (!post) {
 		throw new NotFoundError("Post not found")
 	}

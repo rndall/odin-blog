@@ -1,4 +1,5 @@
 import { PUBLIC_API_BASE_URL } from '$env/static/public'
+import { postComments } from './post-comments'
 import { posts } from './posts'
 
 type SvelteFetch = typeof fetch
@@ -30,5 +31,6 @@ export const createRequest = (fetch: SvelteFetch) => {
 }
 
 export const createApi = (fetch: SvelteFetch) => ({
-	posts: posts(createRequest(fetch))
+	posts: posts(createRequest(fetch)),
+	postComments: postComments(createRequest(fetch))
 })

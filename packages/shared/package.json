@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"exports": {
-		"./posts": "./src/types/posts.ts"
+		"./posts": "./src/types/posts.ts",
+		"./users": "./src/types/users.ts",
+		"./post-comments": "./src/types/post-comments.ts"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"

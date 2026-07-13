@@ -36,8 +36,18 @@ export const getComments = async (req: GetCommentsRequest, res: Response) => {
 
 	const post = await prisma.post.findUnique({
 		where: { slug },
-		include: {
-			comments: { orderBy: { createdAt: "asc" }, omit: { postId: true } },
+		select: {
+			comments: {
+				orderBy: { createdAt: "asc" },
+				select: {
+					id: true,
+					content: true,
+					postId: true,
+					createdAt: true,
+					updatedAt: true,
+					user: { select: { id: true, username: true, fullName: true } },
+				},
+			},
 		},
 	})
 	if (!post) {
