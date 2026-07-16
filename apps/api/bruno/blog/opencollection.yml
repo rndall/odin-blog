@@ -16,12 +16,12 @@ config:
 
 request:
   variables:
-    - name: postId
-      value: "1"
+    - name: postSlug
+      value: published-post-title
   scripts:
     - type: before-request
       code: |-
-        const token = bru.getEnvVar("token")
+        const token = bru.getVar("token")
 
         if (!token) return
 

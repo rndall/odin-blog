@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs"
 import type { Response } from "express"
 import jwt from "jsonwebtoken"
+
 import { env } from "@/config/env"
 import { UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"

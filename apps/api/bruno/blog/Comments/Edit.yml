@@ -5,7 +5,7 @@ info:
 
 http:
   method: PUT
-  url: "{{baseUrl}}/posts/{{postId}}/comments/{{commentId}}"
+  url: "{{baseUrl}}/posts/{{postSlug}}/comments/{{commentId}}"
   body:
     type: json
     data: |-

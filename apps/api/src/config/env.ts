@@ -8,6 +8,7 @@ const envSchema = z.object({
 		.enum(["development", "production", "test"])
 		.default("development"),
 	JWT_SECRET: z.string().nonempty(),
+	ALLOWED_ORIGINS: z.string(),
 })
 
 export const env = envSchema.parse(process.env)

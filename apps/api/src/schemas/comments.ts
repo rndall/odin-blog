@@ -1,5 +1,5 @@
 import z from "zod"
-import { idParamsSchema } from "."
+import { postSlugParamsSchema } from "./posts"
 
 export const commentIdParamsSchema = z.object({
 	commentId: z.coerce
@@ -8,7 +8,7 @@ export const commentIdParamsSchema = z.object({
 })
 
 export const postCommentParamsSchema = commentIdParamsSchema.extend(
-	idParamsSchema.shape,
+	postSlugParamsSchema.shape,
 )
 
 export type CommentIdParams = z.infer<typeof commentIdParamsSchema>

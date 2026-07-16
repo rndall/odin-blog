@@ -1,11 +1,11 @@
 info:
   name: Edit
   type: http
-  seq: 4
+  seq: 3
 
 http:
   method: PUT
-  url: "{{baseUrl}}/posts/{{postId}}"
+  url: "{{baseUrl}}/posts/{{postSlug}}"
   body:
     type: json
     data: |-

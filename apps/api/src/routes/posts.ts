@@ -1,21 +1,32 @@
 import { postSchema } from "@odin-blog/schemas/posts"
+
 import { Router } from "express"
 import validate from "express-zod-safe"
+
 import {
 	createPost,
 	deletePost,
 	editPost,
-	getPostById,
+	getPostBySlug,
 	getPosts,
 } from "@/controllers/posts"
+
 import { authenticate } from "@/middlewares/authenticate"
 import { requireRole } from "@/middlewares/authorize"
+
 import commentsRouter from "@/routes/comments"
-import { idParamsSchema } from "@/schemas"
+
+import { getPostsQuery, postSlugParamsSchema } from "@/schemas/posts"
 
 const router: Router = Router()
 
-router.get("/", getPosts)
+router.get(
+	"/",
+	validate({
+		query: getPostsQuery,
+	}),
+	getPosts,
+)
 router.post(
 	"/",
 	authenticate,
@@ -23,20 +34,20 @@ router.post(
 	validate({ body: postSchema }),
 	createPost,
 )
-router.get("/:postId", validate({ params: idParamsSchema }), getPostById)
+router.get("/:slug", validate({ params: postSlugParamsSchema }), getPostBySlug)
 router.put(
-	"/:postId",
+	"/:slug",
 	authenticate,
-	validate({ params: idParamsSchema, body: postSchema }),
+	validate({ params: postSlugParamsSchema, body: postSchema }),
 	editPost,
 )
 router.delete(
-	"/:postId",
+	"/:slug",
 	authenticate,
-	validate({ params: idParamsSchema }),
+	validate({ params: postSlugParamsSchema }),
 	deletePost,
 )
 
-router.use("/:postId/comments", commentsRouter)
+router.use("/:slug/comments", commentsRouter)
 
 export default router

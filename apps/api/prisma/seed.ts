@@ -11,8 +11,14 @@ async function main() {
 
 	await prisma.user.createMany({
 		data: [
-			{ username: "author", password: hashedPassword, role: UserRole.AUTHOR },
-			{ username: "user", password: hashedPassword },
+			{
+				username: "author",
+				password: hashedPassword,
+				role: UserRole.AUTHOR,
+				fullName: "Author 1",
+				bio: "This is the bio of Author 1",
+			},
+			{ username: "user", password: hashedPassword, fullName: "User 1" },
 		],
 	})
 
@@ -27,12 +33,15 @@ async function main() {
 		data: [
 			{
 				title: "Published Post Title",
+				slug: "published-post-title",
 				content: "Published Post Content",
 				published: true,
 				authorId: author.id,
+				publishedAt: new Date(),
 			},
 			{
 				title: "Unpublished Post Title",
+				slug: "unpublished-post-title",
 				content: "Unpublished Post Content",
 				authorId: author.id,
 			},

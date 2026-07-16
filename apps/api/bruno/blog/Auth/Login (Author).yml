@@ -23,7 +23,7 @@ runtime:
 
         if (!token) return
 
-        bru.setEnvVar("token", token)
+        bru.setVar("token", token)
 
 settings:
   encodeUrl: true
