@@ -34,27 +34,19 @@ const checkCommentOwnership = async ({
 export const getComments = async (req: GetCommentsRequest, res: Response) => {
 	const { slug } = req.params
 
-	const post = await prisma.post.findUnique({
-		where: { slug },
+	const comments = await prisma.comment.findMany({
+		where: { post: { slug } },
+		orderBy: { createdAt: "asc" },
 		select: {
-			comments: {
-				orderBy: { createdAt: "asc" },
-				select: {
-					id: true,
-					content: true,
-					postId: true,
-					createdAt: true,
-					updatedAt: true,
-					user: { select: { id: true, username: true, fullName: true } },
-				},
-			},
+			id: true,
+			content: true,
+			postId: true,
+			createdAt: true,
+			updatedAt: true,
+			user: { select: { id: true, username: true, fullName: true } },
 		},
 	})
-	if (!post) {
-		throw new NotFoundError("Post not found")
-	}
-
-	res.json({ comments: post.comments })
+	res.json({ comments })
 }
 
 export const createComment = async (
