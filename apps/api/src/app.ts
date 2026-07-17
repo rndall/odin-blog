@@ -1,6 +1,6 @@
 import compression from "compression"
 import cors, { type CorsOptions } from "cors"
-import express, { type Express, json, urlencoded } from "express"
+import express, { type Express, json, Router, urlencoded } from "express"
 import helmet from "helmet"
 
 import { env } from "@/config/env"
@@ -35,9 +35,13 @@ app.use(urlencoded({ extended: true }))
 
 app.use(passport.initialize())
 
-app.use("/", authRouter)
-app.use("/posts", postsRouter)
-app.use("/user", userRouter)
+const apiRouter = Router()
+
+apiRouter.use("/auth", authRouter)
+apiRouter.use("/posts", postsRouter)
+apiRouter.use("/user", userRouter)
+
+app.use("/api", apiRouter)
 
 app.use(errorHandler)
 
