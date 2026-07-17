@@ -11,3 +11,12 @@ export const getPosts = async (req: Request, res: Response) => {
 	})
 	res.json({ posts })
 }
+
+export const getComments = async (req: Request, res: Response) => {
+	const authorId = req.user!.id
+	const comments = await prisma.comment.findMany({
+		where: { post: { authorId } },
+		orderBy: { createdAt: "asc" },
+	})
+	res.json({ comments })
+}

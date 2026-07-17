@@ -37,7 +37,7 @@ app.use(passport.initialize())
 
 const apiRouter = Router()
 
-apiRouter.use("/auth", authRouter)
+apiRouter.use("/", authRouter)
 apiRouter.use("/posts", postsRouter)
 apiRouter.use("/user", userRouter)
 

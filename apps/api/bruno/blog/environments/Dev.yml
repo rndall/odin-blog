@@ -1,4 +1,4 @@
 name: Dev
 variables:
-  - name: apiUrl
+  - name: baseUrl
     value: "{{process.env.API_URL}}"
