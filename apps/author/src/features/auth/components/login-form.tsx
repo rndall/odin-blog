@@ -1,10 +1,19 @@
 /** biome-ignore-all lint/correctness/noUnusedImports: subject to change */
 /** biome-ignore-all lint/correctness/noChildrenProp: Tanstack Form API */
 
+import { EyeIcon, EyeOff } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
 import { loginSchema } from "@odin-blog/schemas/auth"
 import { useForm } from "@tanstack/react-form"
 import { useNavigate, useSearch } from "@tanstack/react-router"
+import { useState } from "react"
 
+import {
+	InputGroup,
+	InputGroupAddon,
+	InputGroupButton,
+	InputGroupInput,
+} from "#/components/ui/input-group"
 import { Spinner } from "#/components/ui/spinner"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -27,6 +36,8 @@ export function LoginForm({
 	const { redirect } = useSearch({ from: "/_auth" })
 	const { loginMutation } = useAuth()
 	const navigate = useNavigate()
+
+	const [showPassword, setShowPassword] = useState(false)
 
 	const form = useForm({
 		defaultValues: {
@@ -123,17 +134,34 @@ export function LoginForm({
 													Forgot your password?
 												</a> */}
 											</div>
-											<Input
-												id={field.name}
-												name={field.name}
-												value={field.state.value}
-												onBlur={field.handleBlur}
-												onChange={(e) => field.handleChange(e.target.value)}
-												aria-invalid={isInvalid}
-												type="password"
-												className="bg-[#e8e8ea]"
-												required
-											/>
+											<InputGroup className="bg-[#e8e8ea]">
+												<InputGroupInput
+													id={field.name}
+													name={field.name}
+													value={field.state.value}
+													onBlur={field.handleBlur}
+													onChange={(e) => field.handleChange(e.target.value)}
+													aria-invalid={isInvalid}
+													type={showPassword ? "text" : "password"}
+													required
+												/>
+												<InputGroupAddon align="inline-end">
+													<InputGroupButton
+														className="hover:bg-[#e8e8ea]"
+														aria-label={
+															showPassword ? "Hide password" : "Show password"
+														}
+														title={
+															showPassword ? "Hide password" : "Show password"
+														}
+														onClick={() => setShowPassword((prev) => !prev)}
+													>
+														<HugeiconsIcon
+															icon={showPassword ? EyeOff : EyeIcon}
+														/>
+													</InputGroupButton>
+												</InputGroupAddon>
+											</InputGroup>
 											{isInvalid && (
 												<FieldError errors={field.state.meta.errors} />
 											)}

@@ -22,7 +22,7 @@ export function useAuth() {
 			router.invalidate()
 		},
 		onError: (error) => {
-			console.error(error)
+			console.error(error.message)
 		},
 	})
 
