@@ -1,8 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router"
 
 import { LoginForm } from "#/features/auth/components/login-form"
+import { pageTitle } from "#/utils/page-title"
 
 export const Route = createFileRoute("/_auth/login")({
+	head: () => ({
+		meta: [
+			{
+				title: pageTitle("Login"),
+			},
+		],
+	}),
 	component: RouteComponent,
 })
 
