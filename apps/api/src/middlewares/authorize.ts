@@ -1,6 +1,6 @@
+import { UnauthorizedError } from "@odin-blog/shared/errors"
 import type { WeakRequestHandler } from "express-zod-safe"
 import type { UserRole } from "generated/prisma/enums"
-import { UnauthorizedError } from "@/errors"
 
 export const requireRole =
 	(role: UserRole): WeakRequestHandler =>

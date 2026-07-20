@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Post } from '@odin-blog/shared/posts'
+	import type { Post } from '@odin-blog/shared/types/posts'
 	import { resolve } from '$app/paths'
 	import Button from '$lib/components/ui/button/button.svelte'
 	import * as Card from '$lib/components/ui/card'

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Post } from '@odin-blog/shared/posts'
+	import type { Post } from '@odin-blog/shared/types/posts'
 	import { resolve } from '$app/paths'
 	import * as Item from '$lib/components/ui/item'
 	import * as Tooltip from '$lib/components/ui/tooltip'

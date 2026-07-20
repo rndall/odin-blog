@@ -1,9 +1,9 @@
+import { UnauthorizedError } from "@odin-blog/shared/errors"
 import { compare } from "bcryptjs"
 import type { UserRole } from "generated/prisma/enums"
 import jwt from "jsonwebtoken"
 
 import { env } from "@/config/env"
-import { UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"
 
 export const generateAuthToken = (userId: number, role: UserRole) => {

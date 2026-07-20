@@ -3,6 +3,12 @@ import type { Request, Response } from "express"
 
 import { prisma } from "@/lib/prisma"
 
+export const getMe = async (req: Request, res: Response) => {
+	const user = req.user!
+	const { password, ...userWithoutPassword } = user
+	res.json({ user: userWithoutPassword })
+}
+
 export const getPosts = async (req: Request, res: Response) => {
 	const authorId = req.user!.id
 	const posts = await prisma.post.findMany({
