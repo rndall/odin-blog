@@ -13,6 +13,10 @@ import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as AuthedRouteRouteImport } from './routes/_authed/route'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
+import { Route as AuthedCommentsRouteImport } from './routes/_authed/comments'
+import { Route as AuthedPostsIndexRouteImport } from './routes/_authed/posts/index'
+import { Route as AuthedPostsEditRouteImport } from './routes/_authed/posts/edit'
+import { Route as AuthedPostsNewRouteImport } from './routes/_authed/posts/new'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
@@ -32,28 +36,75 @@ const AuthedIndexRoute = AuthedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
+const AuthedCommentsRoute = AuthedCommentsRouteImport.update({
+  id: '/comments',
+  path: '/comments',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
+const AuthedPostsIndexRoute = AuthedPostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
+const AuthedPostsEditRoute = AuthedPostsEditRouteImport.update({
+  id: '/posts/edit',
+  path: '/posts/edit',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
+const AuthedPostsNewRoute = AuthedPostsNewRouteImport.update({
+  id: '/posts/new',
+  path: '/posts/new',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
   '/login': typeof AuthLoginRoute
+  '/comments': typeof AuthedCommentsRoute
+  '/posts/edit': typeof AuthedPostsEditRoute
+  '/posts/new': typeof AuthedPostsNewRoute
+  '/posts/': typeof AuthedPostsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthedIndexRoute
   '/login': typeof AuthLoginRoute
+  '/comments': typeof AuthedCommentsRoute
+  '/posts/edit': typeof AuthedPostsEditRoute
+  '/posts/new': typeof AuthedPostsNewRoute
+  '/posts': typeof AuthedPostsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_authed': typeof AuthedRouteRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_authed/comments': typeof AuthedCommentsRoute
   '/_authed/': typeof AuthedIndexRoute
+  '/_authed/posts/edit': typeof AuthedPostsEditRoute
+  '/_authed/posts/new': typeof AuthedPostsNewRoute
+  '/_authed/posts/': typeof AuthedPostsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/comments'
+    | '/posts/edit'
+    | '/posts/new'
+    | '/posts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
-  id: '__root__' | '/_auth' | '/_authed' | '/_auth/login' | '/_authed/'
+  to: '/' | '/login' | '/comments' | '/posts/edit' | '/posts/new' | '/posts'
+  id:
+    | '__root__'
+    | '/_auth'
+    | '/_authed'
+    | '/_auth/login'
+    | '/_authed/comments'
+    | '/_authed/'
+    | '/_authed/posts/edit'
+    | '/_authed/posts/new'
+    | '/_authed/posts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -91,6 +142,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedIndexRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
+    '/_authed/comments': {
+      id: '/_authed/comments'
+      path: '/comments'
+      fullPath: '/comments'
+      preLoaderRoute: typeof AuthedCommentsRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
+    '/_authed/posts/': {
+      id: '/_authed/posts/'
+      path: '/posts'
+      fullPath: '/posts/'
+      preLoaderRoute: typeof AuthedPostsIndexRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
+    '/_authed/posts/edit': {
+      id: '/_authed/posts/edit'
+      path: '/posts/edit'
+      fullPath: '/posts/edit'
+      preLoaderRoute: typeof AuthedPostsEditRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
+    '/_authed/posts/new': {
+      id: '/_authed/posts/new'
+      path: '/posts/new'
+      fullPath: '/posts/new'
+      preLoaderRoute: typeof AuthedPostsNewRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
   }
 }
 
@@ -107,11 +186,19 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 )
 
 interface AuthedRouteRouteChildren {
+  AuthedCommentsRoute: typeof AuthedCommentsRoute
   AuthedIndexRoute: typeof AuthedIndexRoute
+  AuthedPostsEditRoute: typeof AuthedPostsEditRoute
+  AuthedPostsNewRoute: typeof AuthedPostsNewRoute
+  AuthedPostsIndexRoute: typeof AuthedPostsIndexRoute
 }
 
 const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
+  AuthedCommentsRoute: AuthedCommentsRoute,
   AuthedIndexRoute: AuthedIndexRoute,
+  AuthedPostsEditRoute: AuthedPostsEditRoute,
+  AuthedPostsNewRoute: AuthedPostsNewRoute,
+  AuthedPostsIndexRoute: AuthedPostsIndexRoute,
 }
 
 const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(

@@ -1,5 +1,6 @@
-import { createFileRoute, redirect } from "@tanstack/react-router"
-
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+import { AppSidebar } from "#/components/app-sidebar"
+import { SidebarProvider, SidebarTrigger } from "#/components/ui/sidebar"
 import { authQueries } from "#/features/auth/queries"
 
 export const Route = createFileRoute("/_authed")({
@@ -18,4 +19,17 @@ export const Route = createFileRoute("/_authed")({
 		}
 		return { user }
 	},
+	component: Layout,
 })
+
+function Layout() {
+	return (
+		<SidebarProvider>
+			<AppSidebar />
+			<main>
+				<SidebarTrigger className="md:hidden" />
+				<Outlet />
+			</main>
+		</SidebarProvider>
+	)
+}
