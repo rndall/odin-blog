@@ -1,10 +1,10 @@
 import {
 	DashboardSquare02Icon,
 	FeatherIcon,
+	LicenseIcon,
 	MailOpen02Icon,
 	MessageMultiple02Icon,
 	PlusSignSquareIcon,
-	StickyNote01Icon,
 	ViewIcon,
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -38,7 +38,7 @@ const data: NavData = {
 		{
 			title: "Posts",
 			to: "/posts",
-			icon: StickyNote01Icon,
+			icon: LicenseIcon,
 		},
 		{
 			title: "New Post",

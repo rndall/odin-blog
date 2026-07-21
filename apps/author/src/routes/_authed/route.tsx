@@ -26,8 +26,8 @@ function Layout() {
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<main>
-				<SidebarTrigger className="md:hidden" />
+			<main className="container mx-auto flex-1 px-4 py-8 md:px-12">
+				<SidebarTrigger className="absolute top-1 left-1 md:hidden" />
 				<Outlet />
 			</main>
 		</SidebarProvider>

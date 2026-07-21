@@ -7,6 +7,7 @@ import { env } from "@/config/env"
 import { passport } from "@/lib/passport"
 import { errorHandler } from "@/middlewares/errorHandler"
 
+import indexRouter from "@/routes"
 import authRouter from "@/routes/auth"
 import postsRouter from "@/routes/posts"
 import userRouter from "@/routes/user"
@@ -38,6 +39,7 @@ app.use(passport.initialize())
 const apiRouter = Router()
 
 apiRouter.use("/", authRouter)
+apiRouter.use("/", indexRouter)
 apiRouter.use("/posts", postsRouter)
 apiRouter.use("/user", userRouter)
 

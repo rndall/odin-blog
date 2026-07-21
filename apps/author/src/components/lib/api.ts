@@ -32,7 +32,7 @@ export const api = async <T>(
 		...init,
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
+			...(token ? { Authorization: `Bearer ${token}` } : {}),
 			...init.headers,
 		},
 	})

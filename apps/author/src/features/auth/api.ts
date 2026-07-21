@@ -9,13 +9,10 @@ interface LoginResponse {
 	user: AuthorWithoutBio
 }
 
-export const validateToken = async (): Promise<AuthorWithoutBio> =>
-	api("/user/me")
+export const validateToken = () => api<AuthorWithoutBio>("/user/me")
 
-export const login = async (
-	credentials: Omit<LoginValues, "client">,
-): Promise<LoginResponse> =>
-	api("/author/login", {
+export const login = (credentials: Omit<LoginValues, "client">) =>
+	api<LoginResponse>("/author/login", {
 		method: "POST",
 		body: JSON.stringify(credentials),
 	})
