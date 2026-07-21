@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_auth")({
 
 		if (user) {
 			throw redirect({
-				to: search.redirect,
+				to: search.redirect ?? "/",
 			})
 		}
 		return { user }
