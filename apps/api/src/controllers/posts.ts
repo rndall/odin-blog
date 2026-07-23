@@ -34,6 +34,7 @@ export const getPosts = async (req: GetPostsRequest, res: Response) => {
 			skip: 1,
 			cursor: {
 				id: cursor.id,
+				publishedAt: cursor.publishedAt,
 			},
 		}),
 		where: { published: true },
