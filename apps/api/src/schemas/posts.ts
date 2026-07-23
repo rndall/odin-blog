@@ -1,11 +1,11 @@
-import { cursorPaginationQuerySchema } from "@odin-blog/schemas/pagination"
+import { postCursorPaginationQuerySchema } from "@odin-blog/schemas/pagination"
 
 import type { PostOrderByWithRelationInput } from "generated/prisma/models"
 import z from "zod"
 
 import { buildSortSchema } from "@/utils/buildSortSchema"
 
-const POSTS_SORT_FIELDS = [
+export const POSTS_SORT_FIELDS = [
 	"id",
 	"title",
 	"content",
@@ -29,7 +29,7 @@ export const postsSortQuerySchema = z.object({
 })
 
 export const getPostsQuery = postsSortQuerySchema.extend(
-	cursorPaginationQuerySchema.shape,
+	postCursorPaginationQuerySchema.shape,
 )
 
 export const postSlugParamsSchema = z.object({

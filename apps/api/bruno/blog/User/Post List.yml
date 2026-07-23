@@ -6,6 +6,19 @@ info:
 http:
   method: GET
   url: "{{baseUrl}}/user/posts"
+  params:
+    - name: sort
+      value: -createdAt
+      type: query
+      disabled: true
+    - name: page
+      value: ""
+      type: query
+      disabled: true
+    - name: limit
+      value: ""
+      type: query
+      disabled: true
   auth: inherit
 
 settings:
