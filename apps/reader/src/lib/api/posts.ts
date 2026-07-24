@@ -1,4 +1,4 @@
-import type { Post } from '@odin-blog/shared/types/posts'
+import type { Post } from '$lib/types/posts'
 import { toQueryString } from '$lib/utils/api'
 import type { Request } from '.'
 

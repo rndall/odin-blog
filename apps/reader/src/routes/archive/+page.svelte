@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Post } from '@odin-blog/shared/types/posts'
 	import { resolve } from '$app/paths'
 	import * as Item from '$lib/components/ui/item'
 	import * as Tooltip from '$lib/components/ui/tooltip'
 	import { dayjs } from '$lib/dayjs'
+	import type { Post } from '$lib/types/posts'
 	import type { PageProps } from './$types'
 
 	let { data }: PageProps = $props()

@@ -1,6 +1,6 @@
-import { useMediaQuery } from "usehooks-ts"
 import { Card, CardContent, CardHeader } from "#/components/ui/card"
 import { Skeleton } from "#/components/ui/skeleton"
+import { useIsMobile } from "#/hooks/use-mobile"
 
 export function CardsSkeleton() {
 	return (
@@ -14,7 +14,7 @@ export function CardsSkeleton() {
 }
 
 function DashboardCardSkeleton() {
-	const isMobile = useMediaQuery("(width < 48rem")
+	const isMobile = useIsMobile()
 
 	return (
 		<Card size={isMobile ? "sm" : "default"} className="rounded-sm">

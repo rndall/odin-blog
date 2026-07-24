@@ -5,6 +5,7 @@ export interface Post {
 	title: string
 	content: string
 	author: Author
+	createdAt: string
 	publishedAt: string
 	published: boolean
 	slug: string

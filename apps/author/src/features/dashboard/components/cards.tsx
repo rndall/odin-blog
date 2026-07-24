@@ -6,7 +6,7 @@ import {
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { useMediaQuery } from "usehooks-ts"
+
 import {
 	Card,
 	CardAction,
@@ -14,6 +14,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "#/components/ui/card"
+import { useIsMobile } from "#/hooks/use-mobile"
 import { dashboardQueries } from "../queries"
 
 export function Cards() {
@@ -90,7 +91,7 @@ interface DashboardCard {
 }
 
 function DashboardCard({ title, icon, count }: DashboardCard) {
-	const isMobile = useMediaQuery("(width < 48rem")
+	const isMobile = useIsMobile()
 
 	return (
 		<Card size={isMobile ? "sm" : "default"} className="rounded-sm">

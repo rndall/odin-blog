@@ -24,9 +24,9 @@ export const Route = createFileRoute("/_authed")({
 
 function Layout() {
 	return (
-		<SidebarProvider>
+		<SidebarProvider className="bg-[#f9f9fc]">
 			<AppSidebar />
-			<main className="container mx-auto flex-1 bg-[#f9f9fc] px-4 py-8 md:px-12">
+			<main className="container mx-auto flex-1 px-4 py-8 md:px-12">
 				<SidebarTrigger className="absolute top-1 left-1 md:hidden" />
 				<Outlet />
 			</main>

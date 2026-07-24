@@ -4,6 +4,7 @@ import {
 	NotFoundError,
 	UnauthorizedError,
 } from "@odin-blog/shared/errors"
+import { type QueryParams, toQueryParams } from "#/lib/utils"
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -23,12 +24,17 @@ const throwHttpError = async (response: Response): Promise<never> => {
 	}
 }
 
+interface Init extends RequestInit {
+	params?: QueryParams
+}
 export const api = async <T>(
 	path: string,
-	init: RequestInit = {},
+	{ params, ...init }: Init = {},
 ): Promise<T> => {
 	const token = localStorage.getItem("token")
-	const response = await fetch(`${BASE_URL}${path}`, {
+	const queryString = toQueryParams(params)
+
+	const response = await fetch(`${BASE_URL}${path}${queryString}`, {
 		...init,
 		headers: {
 			"Content-Type": "application/json",
