@@ -8,12 +8,16 @@
 		"./types/posts": "./src/types/posts.ts",
 		"./types/users": "./src/types/users.ts",
 		"./types/post-comments": "./src/types/post-comments.ts",
-		"./errors": "./src/errors.ts"
+		"./errors": "./src/errors.ts",
+		"./lib/dayjs": "./src/lib/dayjs.ts"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"dayjs": "^1.11.20"
+	}
 }

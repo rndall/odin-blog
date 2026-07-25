@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { dayjs } from '@odin-blog/shared/lib/dayjs'
 	import type { PostComment } from '@odin-blog/shared/types/post-comments'
 	import * as Item from '$lib/components/ui/item'
-	import { dayjs } from '$lib/dayjs'
 	import type { PageProps } from './$types'
 
 	let { data }: PageProps = $props()

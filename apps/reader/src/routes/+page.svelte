@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { dayjs } from '@odin-blog/shared/lib/dayjs'
 	import { resolve } from '$app/paths'
 	import Button from '$lib/components/ui/button/button.svelte'
 	import * as Card from '$lib/components/ui/card'
 	import * as Item from '$lib/components/ui/item'
 	import { Separator } from '$lib/components/ui/separator'
-	import { dayjs } from '$lib/dayjs'
 	import type { Post } from '$lib/types/posts'
 	import type { PageProps } from './$types'
 
