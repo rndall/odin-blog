@@ -1,5 +1,7 @@
+import { dayjs } from "@odin-blog/shared/lib/dayjs"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { cva } from "class-variance-authority"
+
 import { Badge } from "#/components/ui/badge"
 import {
 	Item,
@@ -8,11 +10,18 @@ import {
 	ItemGroup,
 	ItemTitle,
 } from "#/components/ui/item"
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "#/components/ui/tooltip"
 import { cn } from "#/lib/utils"
 import { myPostQueries } from "../queries"
 import type { Post } from "../types"
 
-export function Posts({ ...props }: React.ComponentProps<typeof ItemGroup>) {
+export default function Posts({
+	...props
+}: React.ComponentProps<typeof ItemGroup>) {
 	const {
 		data: { data: posts },
 	} = useSuspenseQuery(myPostQueries.list({ limit: 3 }))
@@ -39,7 +48,7 @@ function PostItem(post: Post) {
 	return (
 		<Item className="bg-white" variant="muted">
 			<ItemContent>
-				<div className="flex items-center gap-2">
+				<div className="space-x-2">
 					<Badge
 						className={cn(
 							postBadgeVariants({
@@ -49,9 +58,18 @@ function PostItem(post: Post) {
 					>
 						{post.published ? "Published" : "Draft"}
 					</Badge>
-					<p className="text-muted-foreground text-xs">
-						{new Date(post.createdAt).toLocaleDateString()}
-					</p>
+					<Tooltip>
+						<TooltipTrigger
+							render={
+								<span className="cursor-default text-muted-foreground text-xs">
+									{dayjs(post.createdAt).fromNow()}
+								</span>
+							}
+						/>
+						<TooltipContent>
+							<p>{dayjs(post.createdAt).format("LLL")}</p>
+						</TooltipContent>
+					</Tooltip>
 				</div>
 				<ItemTitle className="font-bold font-heading text-xl">
 					{post.title}

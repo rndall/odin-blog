@@ -5,11 +5,12 @@ import { Suspense } from "react"
 
 import { Button, buttonVariants } from "#/components/ui/button"
 import { useAuth } from "#/features/auth/hooks/useAuth"
-import { Cards } from "#/features/dashboard/components/cards"
-import { CardsSkeleton } from "#/features/dashboard/components/cards-skeleton"
+import Cards from "#/features/dashboard/components/cards"
+import CardsSkeleton from "#/features/dashboard/components/cards-skeleton"
+import QuickActions from "#/features/dashboard/components/quick-actions"
 import { dashboardQueries } from "#/features/dashboard/queries"
-import { Posts } from "#/features/posts/components/posts"
-import { PostsSkeleton } from "#/features/posts/components/posts-skeleton"
+import Posts from "#/features/posts/components/posts"
+import PostsSkeleton from "#/features/posts/components/posts-skeleton"
 import { myPostQueries } from "#/features/posts/queries"
 import { cn } from "#/lib/utils"
 
@@ -25,7 +26,7 @@ function Home() {
 	const { logout } = useAuth()
 
 	return (
-		<div className="space-y-18">
+		<div className="space-y-8 md:space-y-18">
 			<section className="space-y-4">
 				<h1 className="font-bold font-heading text-5xl">Overview</h1>
 				<p className="text-lg text-primary">
@@ -38,8 +39,11 @@ function Home() {
 					<Cards />
 				</Suspense>
 			</section>
-			<div className="grid">
-				<section></section>
+			<div className="grid gap-8 md:gap-y-18 lg:grid-cols-[1fr_200px] xl:grid-cols-[1fr_300px]">
+				<section className="space-y-5 lg:order-2">
+					<h2 className="font-bold font-heading text-2xl">Quick Actions</h2>
+					<QuickActions className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" />
+				</section>
 				<div>
 					<section className="space-y-4">
 						<div className="flex items-center justify-between">

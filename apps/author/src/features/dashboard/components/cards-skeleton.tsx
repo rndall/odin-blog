@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from "#/components/ui/card"
 import { Skeleton } from "#/components/ui/skeleton"
 import { useIsMobile } from "#/hooks/use-mobile"
 
-export function CardsSkeleton() {
+export default function CardsSkeleton() {
 	return (
 		<>
 			<DashboardCardSkeleton />

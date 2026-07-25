@@ -17,7 +17,7 @@ import {
 import { useIsMobile } from "#/hooks/use-mobile"
 import { dashboardQueries } from "../queries"
 
-export function Cards() {
+export default function Cards() {
 	const {
 		data: { commentCount, draftPostCount, publishedPostCount, totalPostCount },
 	} = useSuspenseQuery(dashboardQueries.metrics())

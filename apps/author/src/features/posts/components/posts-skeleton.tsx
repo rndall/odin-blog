@@ -7,7 +7,7 @@ import {
 } from "#/components/ui/item"
 import { Skeleton } from "#/components/ui/skeleton"
 
-export function PostsSkeleton({
+export default function PostsSkeleton({
 	...props
 }: React.ComponentProps<typeof ItemGroup>) {
 	return (
