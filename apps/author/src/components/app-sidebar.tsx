@@ -73,7 +73,7 @@ export function AppSidebar() {
 	const { state } = useSidebar()
 
 	return (
-		<Sidebar collapsible="icon" className="bg-sidebar">
+		<Sidebar collapsible="icon" className="bg-[#f3f3f6]">
 			<SidebarHeader>
 				<SidebarTrigger className="self-end" />
 				<SidebarMenu>
