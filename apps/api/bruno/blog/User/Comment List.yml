@@ -6,6 +6,15 @@ info:
 http:
   method: GET
   url: "{{baseUrl}}/user/comments"
+  params:
+    - name: cursor
+      value: ""
+      type: query
+      disabled: true
+    - name: limit
+      value: ""
+      type: query
+      disabled: true
   auth: inherit
 
 settings:

@@ -3,7 +3,7 @@ import validate from "express-zod-safe"
 import { getComments, getMe, getPosts } from "@/controllers/user"
 import { authenticate } from "@/middlewares/authenticate"
 import { requireRole } from "@/middlewares/authorize"
-import { getPostsQuery } from "@/schemas/user"
+import { getCommentsQuery, getPostsQuery } from "@/schemas/user"
 
 const router: Router = Router()
 
@@ -15,6 +15,12 @@ router.get(
 	validate({ query: getPostsQuery }),
 	getPosts,
 )
-router.get("/comments", authenticate, requireRole("AUTHOR"), getComments)
+router.get(
+	"/comments",
+	authenticate,
+	requireRole("AUTHOR"),
+	validate({ query: getCommentsQuery }),
+	getComments,
+)
 
 export default router

@@ -32,10 +32,7 @@ export const getPosts = async (req: GetPostsRequest, res: Response) => {
 		take: limit + 1,
 		...(cursor && {
 			skip: 1,
-			cursor: {
-				id: cursor.id,
-				publishedAt: cursor.publishedAt,
-			},
+			cursor,
 		}),
 		where: { published: true },
 		select: {

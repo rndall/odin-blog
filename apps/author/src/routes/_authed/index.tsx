@@ -5,6 +5,9 @@ import { Suspense } from "react"
 
 import { Button, buttonVariants } from "#/components/ui/button"
 import { useAuth } from "#/features/auth/hooks/useAuth"
+import RecentActivity from "#/features/comments/components/recent-activity"
+import RecentActivitySkeleton from "#/features/comments/components/recent-activity-skeleton"
+import { commentQueries } from "#/features/comments/queries"
 import Cards from "#/features/dashboard/components/cards"
 import CardsSkeleton from "#/features/dashboard/components/cards-skeleton"
 import QuickActions from "#/features/dashboard/components/quick-actions"
@@ -18,6 +21,9 @@ export const Route = createFileRoute("/_authed/")({
 	loader: async ({ context }) => {
 		context.queryClient.ensureQueryData(dashboardQueries.metrics())
 		context.queryClient.ensureQueryData(myPostQueries.list({ limit: 3 }))
+		context.queryClient.ensureInfiniteQueryData(
+			commentQueries.list({ limit: 2 }),
+		)
 	},
 	component: Home,
 })
@@ -44,8 +50,8 @@ function Home() {
 					<h2 className="font-bold font-heading text-2xl">Quick Actions</h2>
 					<QuickActions className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" />
 				</section>
-				<div>
-					<section className="space-y-4">
+				<div className="space-y-18">
+					<section className="space-y-6">
 						<div className="flex items-center justify-between">
 							<h2 className="font-bold font-heading text-3xl">Recent Posts</h2>
 							<Link
@@ -64,6 +70,15 @@ function Home() {
 						<Suspense fallback={<PostsSkeleton />}>
 							<Posts />
 						</Suspense>
+					</section>
+					<section className="space-y-6">
+						<h2 className="font-bold font-heading text-3xl">Recent Activity</h2>
+
+						<div className="rounded-lg bg-[#f2f2f5] p-5">
+							<Suspense fallback={<RecentActivitySkeleton />}>
+								<RecentActivity />
+							</Suspense>
+						</div>
 					</section>
 				</div>
 			</div>

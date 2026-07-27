@@ -8,15 +8,8 @@ export type BaseCursor = {
 	id: number
 } & Record<string, string | number | Date>
 
-export const postCursorSchema = baseCursorSchema.extend({
-	publishedAt: z.coerce.date(),
-})
-
-export type PostCursor = z.infer<typeof postCursorSchema>
-
-export const postCursorPaginationQuerySchema = z.object({
-	limit: z.coerce.number().positive().max(100).default(10),
-	cursor: z.preprocess(
+export const createCursorSchema = <T extends z.ZodTypeAny>(schema: T) =>
+	z.preprocess(
 		(val) => (val === "" ? undefined : val),
 		z
 			.string()
@@ -24,7 +17,7 @@ export const postCursorPaginationQuerySchema = z.object({
 				try {
 					const decoded = Buffer.from(val, "base64url").toString("utf8")
 
-					return postCursorSchema.parse(JSON.parse(decoded))
+					return schema.parse(JSON.parse(decoded))
 				} catch {
 					ctx.issues.push({
 						code: "custom",
@@ -36,8 +29,4 @@ export const postCursorPaginationQuerySchema = z.object({
 				}
 			})
 			.optional(),
-	),
-})
-export type PostCursorPaginationQuery = z.infer<
-	typeof postCursorPaginationQuerySchema
->
+	)
