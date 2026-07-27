@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Validated user through auth middleware */
 import type { Request, Response } from "express"
-
+import type { PostWhereInput } from "generated/prisma/models"
 import { prisma } from "@/lib/prisma"
 import type { GetCommentsRequest, GetPostsRequest } from "@/types/user"
 import { encodeCursor } from "@/utils/pagination"
@@ -13,16 +13,22 @@ export const getMe = async (req: Request, res: Response) => {
 
 export const getPosts = async (req: GetPostsRequest, res: Response) => {
 	const authorId = req.user!.id
-	const { limit, page, sort } = req.query
+	const { limit, page, sort, search } = req.query
 	const skip = (page - 1) * limit
+	const where: PostWhereInput = {
+		authorId,
+		title: { contains: search, mode: "insensitive" },
+	}
 	const [posts, totalPosts] = await prisma.$transaction([
 		prisma.post.findMany({
 			skip,
 			take: limit,
-			where: { authorId },
+			where,
 			orderBy: sort,
 		}),
-		prisma.post.count({ where: { authorId } }),
+		prisma.post.count({
+			where,
+		}),
 	])
 	const totalPages = Math.ceil(totalPosts / limit)
 
