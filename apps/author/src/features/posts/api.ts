@@ -1,15 +1,30 @@
 import { api } from "#/components/lib/api"
+import type { Filters } from "#/types/api"
 import type { Post } from "./types"
 
-export interface PostsFilter {
-	sort?: string
-	page?: number
-	limit?: number
+export const DEFAULT_PAGE = 1
+export const DEFAULT_LIMIT = 10
+export const DEFAULT_SORT = "-createdAt"
+
+export interface PostFilters extends Filters<Post> {
+	search?: string
 }
 
 interface PostsResponse {
 	data: Post[]
+	meta: Meta
 }
 
-export const getPosts = (filter?: PostsFilter) =>
-	api<PostsResponse>("/user/posts", { params: filter })
+interface Meta {
+	total: number
+	totalPages: number
+	currentPage: number
+	limit: number
+	from: number
+	to: number
+	hasNextPage: boolean
+	hasPreviousPage: boolean
+}
+
+export const getPosts = (filters?: PostFilters) =>
+	api<PostsResponse>("/user/posts", { params: filters })

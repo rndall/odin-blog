@@ -2,10 +2,8 @@ import {
 	DashboardSquare02Icon,
 	FeatherIcon,
 	LicenseIcon,
-	MailOpen02Icon,
 	MessageMultiple02Icon,
 	PlusSignSquareIcon,
-	ViewIcon,
 } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Link } from "@tanstack/react-router"
@@ -49,22 +47,6 @@ const data: NavData = {
 			title: "Comments",
 			to: "/comments",
 			icon: MessageMultiple02Icon,
-		},
-		{
-			title: "Published",
-			to: "/posts",
-			search: {
-				status: "published",
-			},
-			icon: ViewIcon,
-		},
-		{
-			title: "Drafts",
-			to: "/posts",
-			search: {
-				status: "draft",
-			},
-			icon: MailOpen02Icon,
 		},
 	],
 }

@@ -6,6 +6,7 @@ import {
 	Scripts,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+
 import { DefaultCatchBoundary } from "#/components/default-catch-boundary"
 import { NotFound } from "#/components/not-found"
 import { TooltipProvider } from "#/components/ui/tooltip"

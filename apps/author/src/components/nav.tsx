@@ -31,9 +31,8 @@ export function Nav({ items, ...props }: NavProps) {
 								render={
 									<Link
 										to={item.to}
-										search={item.search}
 										className="text-primary"
-										activeOptions={{ exact: true }}
+										activeOptions={{ exact: true, includeSearch: false }}
 										activeProps={{
 											"data-active": true,
 										}}

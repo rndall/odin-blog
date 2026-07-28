@@ -1,12 +1,26 @@
 import { queryOptions } from "@tanstack/react-query"
-import { getPosts, type PostsFilter } from "./api"
+import {
+	DEFAULT_LIMIT,
+	DEFAULT_PAGE,
+	DEFAULT_SORT,
+	getPosts,
+	type PostFilters,
+} from "./api"
 
 export const myPostQueries = {
 	all: () => ["my-posts"],
 	lists: () => [...myPostQueries.all(), "list"],
-	list: (filter?: PostsFilter) =>
-		queryOptions({
-			queryKey: [...myPostQueries.lists(), filter],
-			queryFn: () => getPosts(filter),
-		}),
+	list: (filters?: PostFilters) => {
+		const normalized = {
+			page: filters?.page ?? DEFAULT_PAGE,
+			limit: filters?.limit ?? DEFAULT_LIMIT,
+			sort: filters?.sort ?? DEFAULT_SORT,
+			search: filters?.search,
+		}
+
+		return queryOptions({
+			queryKey: [...myPostQueries.lists(), normalized],
+			queryFn: () => getPosts(normalized),
+		})
+	},
 }
