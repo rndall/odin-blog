@@ -1,7 +1,6 @@
 import {
 	Item,
 	ItemContent,
-	ItemDescription,
 	ItemGroup,
 	ItemMedia,
 	ItemTitle,
@@ -31,11 +30,11 @@ function ActivityItem() {
 					<Skeleton className="h-5 w-1/2 bg-muted-foreground/20" />
 				</ItemTitle>
 				<div className="rounded-xs bg-white p-4">
-					<ItemDescription className="space-y-1">
+					<div className="space-y-1">
 						<Skeleton className="h-4 w-full bg-muted-foreground/25" />
 						<Skeleton className="h-4 w-full bg-muted-foreground/25" />
 						<Skeleton className="h-4 w-3/5 bg-muted-foreground/25" />
-					</ItemDescription>
+					</div>
 				</div>
 			</ItemContent>
 		</Item>
