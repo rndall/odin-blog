@@ -1,3 +1,4 @@
+import type { PostValues } from "@odin-blog/schemas/posts"
 import { api } from "#/components/lib/api"
 import type { Filters } from "#/types/api"
 import type { Post } from "./types"
@@ -28,3 +29,6 @@ interface Meta {
 
 export const getPosts = (filters?: PostFilters) =>
 	api<PostsResponse>("/user/posts", { params: filters })
+
+export const createPost = (post: PostValues) =>
+	api<Post>("/posts", { method: "POST", body: post })

@@ -74,7 +74,8 @@ function PostItem(post: Post) {
 				<ItemTitle className="font-bold font-heading text-xl">
 					{post.title}
 				</ItemTitle>
-				<ItemDescription>{post.content}</ItemDescription>
+				{/** biome-ignore lint/security/noDangerouslySetInnerHtml: render post content */}
+				<ItemDescription dangerouslySetInnerHTML={{ __html: post.content }} />
 			</ItemContent>
 		</Item>
 	)

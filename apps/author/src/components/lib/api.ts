@@ -24,12 +24,13 @@ const throwHttpError = async (response: Response): Promise<never> => {
 	}
 }
 
-interface Init extends RequestInit {
+interface Init extends Omit<RequestInit, "body"> {
 	params?: QueryParams
+	body?: unknown
 }
 export const api = async <T>(
 	path: string,
-	{ params, ...init }: Init = {},
+	{ params, body, ...init }: Init = {},
 ): Promise<T> => {
 	const token = localStorage.getItem("token")
 	const queryString = toQueryParams(params)
@@ -41,6 +42,7 @@ export const api = async <T>(
 			...(token ? { Authorization: `Bearer ${token}` } : {}),
 			...init.headers,
 		},
+		body: JSON.stringify(body),
 	})
 
 	if (response.status === 401) {

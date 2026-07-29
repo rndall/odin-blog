@@ -36,34 +36,32 @@ export const Route = createFileRoute("/_authed/posts/")({
 
 function RouteComponent() {
 	return (
-		<div>
-			<section className="">
-				<div className="flex items-center justify-between">
-					<div className="space-y-3">
-						<h1 className="font-heading text-4xl text-primary">Manage Posts</h1>
-						<p>Curate and publish your editorial content.</p>
-					</div>
-					<Link
-						to="/posts/new"
-						className={cn(
-							buttonVariants({ size: "lg" }),
-							"h-15 rounded-md px-6! font-bold text-lg",
-						)}
-					>
-						<HugeiconsIcon
-							data-icon="inline-start"
-							icon={PlusSignIcon}
-							className="size-3! text-white"
-							strokeWidth={2}
-						/>
-						New Post
-					</Link>
+		<section>
+			<div className="flex items-center justify-between">
+				<div className="space-y-3">
+					<h1 className="font-heading text-4xl text-primary">Manage Posts</h1>
+					<p>Curate and publish your editorial content.</p>
 				</div>
+				<Link
+					to="/posts/new"
+					className={cn(
+						buttonVariants({ size: "lg" }),
+						"h-15 rounded-md px-6! font-bold text-lg",
+					)}
+				>
+					<HugeiconsIcon
+						data-icon="inline-start"
+						icon={PlusSignIcon}
+						className="size-3! text-white"
+						strokeWidth={2}
+					/>
+					New Post
+				</Link>
+			</div>
 
-				<div className="py-10">
-					<PostsTable />
-				</div>
-			</section>
-		</div>
+			<div className="py-10">
+				<PostsTable />
+			</div>
+		</section>
 	)
 }
