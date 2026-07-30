@@ -1,6 +1,8 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+
 import { AppSidebar } from "#/components/app-sidebar"
 import { SidebarProvider, SidebarTrigger } from "#/components/ui/sidebar"
+import { Spinner } from "#/components/ui/spinner"
 import { authQueries } from "#/features/auth/queries"
 
 export const Route = createFileRoute("/_authed")({
@@ -19,17 +21,36 @@ export const Route = createFileRoute("/_authed")({
 		}
 		return { user }
 	},
+	pendingComponent: PendingLayout,
 	component: Layout,
 })
 
-function Layout() {
+function AppShell({ children }: { children: React.ReactNode }) {
 	return (
 		<SidebarProvider className="bg-[#f9f9fc]">
 			<AppSidebar />
 			<main className="container mx-auto flex-1 px-4 py-8 md:px-12">
 				<SidebarTrigger className="absolute top-1 left-1 md:hidden" />
-				<Outlet />
+				{children}
 			</main>
 		</SidebarProvider>
+	)
+}
+
+function Layout() {
+	return (
+		<AppShell>
+			<Outlet />
+		</AppShell>
+	)
+}
+
+function PendingLayout() {
+	return (
+		<AppShell>
+			<div className="flex h-full min-h-[50vh] items-center justify-center">
+				<Spinner className="size-8" />
+			</div>
+		</AppShell>
 	)
 }
