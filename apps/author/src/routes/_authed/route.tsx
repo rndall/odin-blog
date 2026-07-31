@@ -27,7 +27,7 @@ export const Route = createFileRoute("/_authed")({
 
 function AppShell({ children }: { children: React.ReactNode }) {
 	return (
-		<SidebarProvider className="bg-[#f9f9fc]">
+		<SidebarProvider>
 			<AppSidebar />
 			<main className="container mx-auto flex-1 px-4 py-8 md:px-12">
 				<SidebarTrigger className="absolute top-1 left-1 md:hidden" />
