@@ -3,12 +3,14 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 
 import { buttonVariants } from "#/components/ui/button"
+import { DataTableSkeleton } from "#/components/ui/data-table/data-table-skeleton"
 import {
 	DEFAULT_LIMIT,
 	DEFAULT_PAGE,
 	DEFAULT_SORT,
 	type PostFilters,
 } from "#/features/posts/api"
+import { columns } from "#/features/posts/components/columns"
 import PostsTable from "#/features/posts/components/posts-table"
 import { myPostQueries } from "#/features/posts/queries"
 import { cn } from "#/lib/utils"
@@ -22,19 +24,20 @@ export const Route = createFileRoute("/_authed/posts/")({
 		search,
 	}),
 	loader: async ({ context, deps: { page, limit, sort, search } }) => {
-		await context.queryClient.ensureQueryData(
-			myPostQueries.list({
+		await context.queryClient.ensureQueryData({
+			...myPostQueries.list({
 				page: page ?? DEFAULT_PAGE,
 				limit: limit ?? DEFAULT_LIMIT,
 				sort: sort ?? DEFAULT_SORT,
 				search,
 			}),
-		)
+		})
 	},
+	pendingComponent: PendingComponent,
 	component: RouteComponent,
 })
 
-function RouteComponent() {
+function PostsPageShell({ children }: { children: React.ReactNode }) {
 	return (
 		<section>
 			<div className="flex items-center justify-between">
@@ -59,9 +62,23 @@ function RouteComponent() {
 				</Link>
 			</div>
 
-			<div className="py-10">
-				<PostsTable />
-			</div>
+			<div className="py-10">{children}</div>
 		</section>
+	)
+}
+
+function RouteComponent() {
+	return (
+		<PostsPageShell>
+			<PostsTable />
+		</PostsPageShell>
+	)
+}
+
+function PendingComponent() {
+	return (
+		<PostsPageShell>
+			<DataTableSkeleton columnCount={columns.length} />
+		</PostsPageShell>
 	)
 }
