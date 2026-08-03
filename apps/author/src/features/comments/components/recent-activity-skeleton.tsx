@@ -13,13 +13,13 @@ export default function RecentActivitySkeleton() {
 			{Array.from({ length: 2 }).map((_, index) => (
 				// biome-ignore lint/suspicious/noArrayIndexKey: skeleton loader
 				<li key={index}>
-					<ActivityItem />
+					<ActivityItemSkeleton />
 				</li>
 			))}
 		</ItemGroup>
 	)
 }
-function ActivityItem() {
+function ActivityItemSkeleton() {
 	return (
 		<Item>
 			<ItemMedia>

@@ -14,5 +14,5 @@ export const validateToken = () => api<AuthorWithoutBio>("/user/me")
 export const login = (credentials: Omit<LoginValues, "client">) =>
 	api<LoginResponse>("/author/login", {
 		method: "POST",
-		body: JSON.stringify(credentials),
+		body: credentials,
 	})

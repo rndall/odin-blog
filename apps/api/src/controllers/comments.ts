@@ -12,24 +12,24 @@ import type {
 	GetCommentsRequest,
 } from "@/types/comments"
 
-const checkCommentOwnership = async ({
-	commentId,
-	postSlug,
-	userId,
-}: {
-	commentId: number
-	postSlug: string
-	userId: number
-}) => {
+const getCommentOrThrow = async (commentId: number, slug: string) => {
 	const comment = await prisma.comment.findUnique({
-		where: { id: commentId, post: { slug: postSlug } },
+		where: { id: commentId },
+		include: {
+			post: {
+				select: {
+					slug: true,
+					authorId: true,
+				},
+			},
+		},
 	})
-	if (!comment) {
+
+	if (!comment || comment.post.slug !== slug) {
 		throw new NotFoundError("Comment not found")
 	}
-	if (comment.userId !== userId) {
-		throw new UnauthorizedError()
-	}
+
+	return comment
 }
 
 export const getComments = async (req: GetCommentsRequest, res: Response) => {
@@ -86,10 +86,14 @@ export const editComment = async (req: EditCommentRequest, res: Response) => {
 
 	const userId = req.user!.id
 	const data = req.body
-	await checkCommentOwnership({ commentId, postSlug: slug, userId })
+	const comment = await getCommentOrThrow(commentId, slug)
+
+	if (comment.userId !== userId) {
+		throw new UnauthorizedError()
+	}
 
 	const editedComment = await prisma.comment.update({
-		where: { id: commentId, post: { slug } },
+		where: { id: commentId },
 		data,
 	})
 	res.json({ message: "Comment edited successfully", comment: editedComment })
@@ -102,10 +106,19 @@ export const deleteComment = async (
 	const { slug, commentId } = req.params
 
 	const userId = req.user!.id
-	await checkCommentOwnership({ commentId, postSlug: slug, userId })
 
-	const comment = await prisma.comment.delete({
-		where: { id: commentId, post: { slug } },
+	const comment = await getCommentOrThrow(commentId, slug)
+
+	const isCommentOwner = comment.userId === userId
+	const isPostOwner = comment.post.authorId === userId
+
+	if (!isCommentOwner && !isPostOwner) {
+		throw new UnauthorizedError()
+	}
+
+	await prisma.comment.delete({
+		where: { id: comment.id },
 	})
+
 	res.json({ message: "Comment deleted successfully", comment })
 }

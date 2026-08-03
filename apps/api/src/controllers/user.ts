@@ -77,6 +77,7 @@ export const getComments = async (req: GetCommentsRequest, res: Response) => {
 				select: {
 					id: true,
 					title: true,
+					slug: true,
 				},
 			},
 		},

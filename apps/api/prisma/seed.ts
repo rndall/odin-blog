@@ -18,43 +18,54 @@ async function main() {
 				fullName: "Author 1",
 				bio: "This is the bio of Author 1",
 			},
+			{
+				username: "author2",
+				password: hashedPassword,
+				role: UserRole.AUTHOR,
+				fullName: "Author 2",
+				bio: "This is the bio of Author 2",
+			},
 			{ username: "user", password: hashedPassword, fullName: "User 1" },
 		],
 	})
 
-	const author = await prisma.user.findUniqueOrThrow({
-		where: { username: "author" },
+	const authors = await prisma.user.findMany({
+		where: { username: { contains: "author" } },
 	})
 	const user = await prisma.user.findUniqueOrThrow({
 		where: { username: "user" },
 	})
 
-	await prisma.post.createMany({
-		data: [
-			{
-				title: "Published Post Title",
-				slug: "published-post-title",
-				content: "Published Post Content",
-				published: true,
-				authorId: author.id,
-				publishedAt: new Date(),
-			},
-			{
-				title: "Unpublished Post Title",
-				slug: "unpublished-post-title",
-				content: "Unpublished Post Content",
-				authorId: author.id,
-			},
-		],
-	})
+	for (const author of authors) {
+		await prisma.post.createMany({
+			data: [
+				{
+					title: "Published Post Title",
+					slug: `published-post-title-${author.id}`,
+					content: "Published Post Content",
+					published: true,
+					authorId: author.id,
+					publishedAt: new Date(),
+				},
+				{
+					title: "Unpublished Post Title",
+					slug: `unpublished-post-title-${author.id}`,
+					content: "Unpublished Post Content",
+					authorId: author.id,
+				},
+			],
+		})
+	}
 
-	const post = await prisma.post.findFirstOrThrow({
-		where: { authorId: author.id },
-	})
+	for (const author of authors) {
+		const post = await prisma.post.findFirstOrThrow({
+			where: { authorId: author.id },
+		})
 
-	await prisma.comment.create({
-		data: { content: "Comment Content", postId: post.id, userId: user.id },
-	})
+		await prisma.comment.create({
+			data: { content: "Comment Content", postId: post.id, userId: user.id },
+		})
+	}
 }
 
 main()
