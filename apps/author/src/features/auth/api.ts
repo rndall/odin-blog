@@ -9,7 +9,7 @@ interface LoginResponse {
 	user: AuthorWithoutBio
 }
 
-export const validateToken = () => api<AuthorWithoutBio>("/user/me")
+export const validateToken = () => api<{ user: AuthorWithoutBio }>("/user/me")
 
 export const login = (credentials: Omit<LoginValues, "client">) =>
 	api<LoginResponse>("/author/login", {

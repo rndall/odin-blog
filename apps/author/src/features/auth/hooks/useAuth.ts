@@ -9,17 +9,17 @@ export function useAuth() {
 	const router = useRouter()
 	const token = localStorage.getItem("token")
 
-	const { data: user, isLoading: isLoadingUser } = useQuery({
+	const { data, isLoading: isLoadingUser } = useQuery({
 		...authQueries.me(),
 		enabled: !!token,
 	})
 
 	const loginMutation = useMutation({
 		mutationFn: login,
-		onSuccess: (data) => {
-			localStorage.setItem("token", data.token)
-			queryClient.setQueryData(authQueries.me().queryKey, data.user)
-			router.invalidate()
+		onSuccess: ({ token, user }) => {
+			localStorage.setItem("token", token)
+			queryClient.setQueryData(authQueries.me().queryKey, { user })
+			// router.invalidate()
 		},
 		onError: (error) => {
 			console.error(error.message)
@@ -33,8 +33,8 @@ export function useAuth() {
 	}
 
 	return {
-		user,
-		isAuthenticated: !!user,
+		user: data?.user,
+		isAuthenticated: !!data?.user,
 		isLoadingUser,
 		loginMutation,
 		logout,

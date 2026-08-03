@@ -9,6 +9,8 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { Link } from "@tanstack/react-router"
 
 import type { NavItem } from "#/types/nav"
+import { NavMain } from "@/components/nav/nav-main"
+import { NavUser } from "@/components/nav/nav-user"
 import {
 	Sidebar,
 	SidebarContent,
@@ -20,7 +22,6 @@ import {
 	SidebarTrigger,
 	useSidebar,
 } from "@/components/ui/sidebar"
-import { Nav } from "./nav"
 
 interface NavData {
 	nav: NavItem[]
@@ -84,9 +85,11 @@ export function AppSidebar() {
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent>
-				<Nav items={data.nav} />
+				<NavMain items={data.nav} />
 			</SidebarContent>
-			<SidebarFooter />
+			<SidebarFooter>
+				<NavUser />
+			</SidebarFooter>
 		</Sidebar>
 	)
 }

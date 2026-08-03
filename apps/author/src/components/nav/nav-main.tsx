@@ -10,13 +10,14 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	useSidebar,
-} from "./ui/sidebar"
+} from "@/components/ui/sidebar"
 
-interface NavProps extends React.ComponentPropsWithoutRef<typeof SidebarGroup> {
+interface NavMainProps
+	extends React.ComponentPropsWithoutRef<typeof SidebarGroup> {
 	items: NavItem[]
 }
 
-export function Nav({ items, ...props }: NavProps) {
+export function NavMain({ items, ...props }: NavMainProps) {
 	const { open } = useSidebar()
 
 	return (

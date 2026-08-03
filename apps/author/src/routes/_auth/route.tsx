@@ -11,15 +11,15 @@ export const Route = createFileRoute("/_auth")({
 
 		if (!token) return
 
-		const user = await context.queryClient
+		const data = await context.queryClient
 			.ensureQueryData(authQueries.me())
 			.catch(() => null)
 
-		if (user) {
+		if (data?.user) {
 			throw redirect({
 				to: search.redirect ?? "/",
 			})
 		}
-		return { user }
+		return { user: data?.user }
 	},
 })

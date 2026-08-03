@@ -2,10 +2,11 @@
 
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
-import { SidebarLeft01Icon, SidebarLeftIcon } from "@hugeicons/core-free-icons"
+import { SidebarLeftIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
@@ -256,8 +257,7 @@ function SidebarTrigger({
 	onClick,
 	...props
 }: React.ComponentProps<typeof Button>) {
-	const { toggleSidebar, isMobile, open, openMobile } = useSidebar()
-	const iconOpen = isMobile ? openMobile : open
+	const { toggleSidebar } = useSidebar()
 
 	return (
 		<Button
@@ -272,10 +272,7 @@ function SidebarTrigger({
 			}}
 			{...props}
 		>
-			<HugeiconsIcon
-				icon={iconOpen ? SidebarLeft01Icon : SidebarLeftIcon}
-				strokeWidth={2}
-			/>
+			<HugeiconsIcon icon={SidebarLeftIcon} strokeWidth={2} />
 			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
 	)
@@ -510,26 +507,18 @@ function SidebarMenuButton({
 	size = "default",
 	tooltip,
 	className,
-	onClick,
 	...props
 }: useRender.ComponentProps<"button"> &
 	React.ComponentProps<"button"> & {
 		isActive?: boolean
 		tooltip?: string | React.ComponentProps<typeof TooltipContent>
 	} & VariantProps<typeof sidebarMenuButtonVariants>) {
-	const { isMobile, state, setOpenMobile } = useSidebar()
+	const { isMobile, state } = useSidebar()
 	const comp = useRender({
 		defaultTagName: "button",
 		props: mergeProps<"button">(
 			{
 				className: cn(sidebarMenuButtonVariants({ variant, size }), className),
-				onClick: (event) => {
-					onClick?.(event)
-
-					if (!event.defaultPrevented && isMobile) {
-						setOpenMobile(false)
-					}
-				},
 			},
 			props,
 		),

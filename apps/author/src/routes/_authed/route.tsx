@@ -7,11 +7,11 @@ import { authQueries } from "#/features/auth/queries"
 
 export const Route = createFileRoute("/_authed")({
 	beforeLoad: async ({ context, location }) => {
-		const user = await context.queryClient
+		const data = await context.queryClient
 			.ensureQueryData(authQueries.me())
 			.catch(() => null)
 
-		if (!user) {
+		if (!data?.user) {
 			throw redirect({
 				to: "/login",
 				search: {
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_authed")({
 				},
 			})
 		}
-		return { user }
+		return { user: data?.user }
 	},
 	pendingComponent: PendingLayout,
 	component: Layout,
