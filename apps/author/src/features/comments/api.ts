@@ -1,6 +1,6 @@
 import type { CommentValues } from "@odin-blog/schemas/comments"
 import type { PostComment } from "@odin-blog/shared/types/post-comments"
-import { api } from "#/components/lib/api"
+import { api } from "#/lib/api"
 import type { Comment } from "./types"
 
 export interface CommentsFilter {

@@ -1,5 +1,5 @@
 import type { PostValues } from "@odin-blog/schemas/posts"
-import { api } from "#/components/lib/api"
+import { api } from "#/lib/api"
 import type { Filters } from "#/types/api"
 import type { Post } from "./types"
 

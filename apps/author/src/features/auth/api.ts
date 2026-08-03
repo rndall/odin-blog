@@ -1,6 +1,6 @@
 import type { LoginValues } from "@odin-blog/schemas/auth"
 import type { Author } from "@odin-blog/shared/types/users"
-import { api } from "#/components/lib/api"
+import { api } from "#/lib/api"
 
 type AuthorWithoutBio = Omit<Author, "bio">
 

@@ -1,4 +1,4 @@
-import { api } from "#/components/lib/api"
+import { api } from "#/lib/api"
 
 interface DashboardRespoonse {
 	totalPostCount: number
