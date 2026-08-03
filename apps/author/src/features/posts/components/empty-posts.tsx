@@ -1,7 +1,6 @@
-import { MessageMultiple02Icon } from "@hugeicons/core-free-icons"
+import { LicenseIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Link } from "@tanstack/react-router"
-
 import { buttonVariants } from "#/components/ui/button"
 import {
 	Empty,
@@ -13,19 +12,22 @@ import {
 } from "#/components/ui/empty"
 import { cn } from "#/lib/utils"
 
-export default function EmptyComments() {
+export default function EmptyPosts() {
 	return (
 		<Empty>
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
-					<HugeiconsIcon icon={MessageMultiple02Icon} />
+					<HugeiconsIcon icon={LicenseIcon} />
 				</EmptyMedia>
-				<EmptyTitle>No Comments Yet</EmptyTitle>
-				<EmptyDescription>You don't have any comments yet.</EmptyDescription>
+				<EmptyTitle>No Posts Yet</EmptyTitle>
+				<EmptyDescription>
+					You haven't created any posts yet. Get started by creating your first
+					post.
+				</EmptyDescription>
 			</EmptyHeader>
 			<EmptyContent>
 				<Link to="/posts/new" className={cn(buttonVariants())}>
-					Create a Post
+					Create Post
 				</Link>
 			</EmptyContent>
 		</Empty>

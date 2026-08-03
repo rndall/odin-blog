@@ -74,11 +74,9 @@ function Home() {
 					<section className="space-y-6">
 						<h2 className="font-bold font-heading text-3xl">Recent Activity</h2>
 
-						<div className="rounded-lg bg-[#f2f2f5] p-5">
-							<Suspense fallback={<RecentActivitySkeleton />}>
-								<RecentActivity />
-							</Suspense>
-						</div>
+						<Suspense fallback={<RecentActivitySkeleton />}>
+							<RecentActivity />
+						</Suspense>
 					</section>
 				</div>
 			</div>

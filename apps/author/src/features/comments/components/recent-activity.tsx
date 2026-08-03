@@ -12,14 +12,21 @@ import {
 import { cn } from "#/lib/utils"
 import { commentQueries } from "../queries"
 import type { Comment } from "../types"
+import EmptyComments from "./empty-comments"
 
 export default function RecentActivity() {
 	const {
 		data: { pages },
 	} = useSuspenseInfiniteQuery(commentQueries.list({ limit: 2 }))
 
+	const hasComments = pages.some((page) => page.comments.length > 0)
+
+	if (!hasComments) {
+		return <EmptyComments />
+	}
+
 	return (
-		<>
+		<div className="rounded-lg bg-[#f2f2f5] p-5">
 			{pages.map((page) => (
 				<ItemGroup className="gap-2" key={page.nextCursor}>
 					{page.comments.map((comment, index) => (
@@ -29,7 +36,7 @@ export default function RecentActivity() {
 					))}
 				</ItemGroup>
 			))}
-		</>
+		</div>
 	)
 }
 

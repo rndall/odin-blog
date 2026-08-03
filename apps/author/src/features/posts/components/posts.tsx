@@ -18,6 +18,7 @@ import {
 import { cn } from "#/lib/utils"
 import { myPostQueries } from "../queries"
 import type { Post } from "../types"
+import EmptyPosts from "./empty-posts"
 
 export default function Posts({
 	...props
@@ -25,6 +26,12 @@ export default function Posts({
 	const {
 		data: { data: posts },
 	} = useSuspenseQuery(myPostQueries.list({ limit: 3 }))
+
+	const hasPosts = posts.length > 0
+
+	if (!hasPosts) {
+		return <EmptyPosts />
+	}
 
 	return (
 		<ItemGroup {...props}>
