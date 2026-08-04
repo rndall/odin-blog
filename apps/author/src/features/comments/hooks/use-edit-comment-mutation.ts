@@ -1,20 +1,13 @@
-import type { CommentValues } from "@odin-blog/schemas/comments"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-import { createComment } from "../api"
+import { editComment } from "../api"
 import { commentQueries } from "../queries"
 
-export function useCreateCommentMutation() {
+export function useEditCommentMutation() {
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		mutationFn: ({
-			postSlug,
-			comment,
-		}: {
-			postSlug: string
-			comment: CommentValues
-		}) => createComment(postSlug, comment),
+		mutationFn: editComment,
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({ queryKey: commentQueries.lists() })
 		},

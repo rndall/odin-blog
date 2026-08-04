@@ -12,17 +12,35 @@ interface CommentsResponse {
 	comments: Comment[]
 	nextCursor: string | null
 }
-
-interface CreateCommentResponse {
-	comment: Omit<PostComment, "user"> & { userId: number }
-}
-
 export const getComments = (filter?: CommentsFilter) =>
 	api<CommentsResponse>("/user/comments", { params: filter })
 
+type CommentResponse = Omit<PostComment, "user"> & { userId: number }
+
+interface CreateCommentResponse {
+	comment: CommentResponse
+}
 export const createComment = (postSlug: string, comment: CommentValues) =>
 	api<CreateCommentResponse>(`/post/${postSlug}/comments`, {
 		method: "POST",
+		body: comment,
+	})
+
+interface EditCommentResponse {
+	message: string
+	comment: CommentResponse
+}
+export const editComment = ({
+	postSlug,
+	commentId,
+	comment,
+}: {
+	postSlug: string
+	commentId: number
+	comment: CommentValues
+}) =>
+	api<EditCommentResponse>(`/posts/${postSlug}/comments/${commentId}`, {
+		method: "PUT",
 		body: comment,
 	})
 
