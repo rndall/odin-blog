@@ -9,6 +9,9 @@ import { commentSchema } from "@odin-blog/schemas/comments"
 import { dayjs } from "@odin-blog/shared/lib/dayjs"
 import { useForm } from "@tanstack/react-form"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
+import { useEffect } from "react"
+import { useInView } from "react-intersection-observer"
+
 import { Button } from "#/components/ui/button"
 import {
 	Card,
@@ -33,9 +36,20 @@ import DeleteCommentAlertDialog from "./delete-comment-alert-dialog"
 import EmptyComments from "./empty-comments"
 
 export default function CommentsList() {
+	const { ref, inView } = useInView()
+
 	const {
 		data: { pages },
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
 	} = useSuspenseInfiniteQuery(commentQueries.list())
+
+	useEffect(() => {
+		if (inView && hasNextPage && !isFetchingNextPage) {
+			fetchNextPage()
+		}
+	}, [inView, hasNextPage, isFetchingNextPage, fetchNextPage])
 
 	const hasComments = pages.some((page) => page.comments.length > 0)
 
@@ -54,6 +68,7 @@ export default function CommentsList() {
 					))}
 				</ul>
 			))}
+			{hasNextPage && <Spinner ref={ref} className="mx-auto size-8" />}
 		</>
 	)
 }
