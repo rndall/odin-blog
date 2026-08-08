@@ -86,7 +86,7 @@ export default function PostForm() {
 						const isInvalid =
 							field.state.meta.isTouched && !field.state.meta.isValid
 						return (
-							<Field data-invalid={isInvalid}>
+							<Field data-invalid={isInvalid} className="min-h-100">
 								<Editor
 									apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
 									initialValue={field.state.value}
