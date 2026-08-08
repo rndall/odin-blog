@@ -1,10 +1,10 @@
 import { MoreHorizontalIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { dayjs } from "@odin-blog/shared/lib/dayjs"
+import { useRouter } from "@tanstack/react-router"
 import type { ColumnDef } from "@tanstack/react-table"
 import { cva } from "class-variance-authority"
 import { useState } from "react"
-
 import { Badge } from "#/components/ui/badge"
 import { Button } from "#/components/ui/button"
 import { DataTableColumnHeader } from "#/components/ui/data-table/data-table-column-header"
@@ -19,6 +19,7 @@ import {
 import { Spinner } from "#/components/ui/spinner"
 import { toast } from "#/components/ui/toast"
 import { useDeletePostMutation } from "../hooks/use-delete-post-mutation"
+import { useEditPostMutation } from "../hooks/use-edit-post-mutation"
 import type { Post } from "../types"
 
 const postBadgeVariants = cva("h-6 font-medium before:content-['•']", {
@@ -88,7 +89,36 @@ export const columns: ColumnDef<Post>[] = [
 			const [open, setOpen] = useState(false)
 			const post = row.original
 
+			const editPostMutation = useEditPostMutation()
 			const deletePostMutation = useDeletePostMutation()
+			const router = useRouter()
+
+			const handleToggleStatus = () => {
+				const newStatus = post.published ? "Draft" : "Published"
+
+				editPostMutation.mutate(
+					{
+						postSlug: post.slug,
+						post: { ...post, published: !post.published },
+					},
+					{
+						onSuccess: () => {
+							toast.add({
+								type: "success",
+								description: `Post status has been changed to ${newStatus}.`,
+							})
+						},
+						onError: (error) => {
+							console.error(error)
+							toast.add({
+								type: "error",
+								description: "Error changing post status.",
+							})
+						},
+						onSettled: () => setOpen(false),
+					},
+				)
+			}
 
 			const handleDelete = () => {
 				deletePostMutation.mutate(post.slug, {
@@ -122,7 +152,24 @@ export const columns: ColumnDef<Post>[] = [
 					<DropdownMenuContent align="end">
 						<DropdownMenuGroup>
 							<DropdownMenuLabel>Actions</DropdownMenuLabel>
-							<DropdownMenuItem>Edit</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={() =>
+									router.navigate({
+										to: "/posts/edit/$slug",
+										params: { slug: post.slug },
+									})
+								}
+							>
+								Edit
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={(e) => {
+									e.preventDefault()
+									handleToggleStatus()
+								}}
+							>
+								Set as {post.published ? "Draft" : "Published"}
+							</DropdownMenuItem>
 							<DropdownMenuItem
 								onClick={(e) => {
 									e.preventDefault()

@@ -15,8 +15,8 @@ import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
 import { Route as AuthedCommentsRouteImport } from './routes/_authed/comments'
 import { Route as AuthedPostsIndexRouteImport } from './routes/_authed/posts/index'
-import { Route as AuthedPostsEditRouteImport } from './routes/_authed/posts/edit'
 import { Route as AuthedPostsNewRouteImport } from './routes/_authed/posts/new'
+import { Route as AuthedPostsEditSlugRouteImport } from './routes/_authed/posts/edit.$slug'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
@@ -46,14 +46,14 @@ const AuthedPostsIndexRoute = AuthedPostsIndexRouteImport.update({
   path: '/posts/',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
-const AuthedPostsEditRoute = AuthedPostsEditRouteImport.update({
-  id: '/posts/edit',
-  path: '/posts/edit',
-  getParentRoute: () => AuthedRouteRoute,
-} as any)
 const AuthedPostsNewRoute = AuthedPostsNewRouteImport.update({
   id: '/posts/new',
   path: '/posts/new',
+  getParentRoute: () => AuthedRouteRoute,
+} as any)
+const AuthedPostsEditSlugRoute = AuthedPostsEditSlugRouteImport.update({
+  id: '/posts/edit/$slug',
+  path: '/posts/edit/$slug',
   getParentRoute: () => AuthedRouteRoute,
 } as any)
 
@@ -61,17 +61,17 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
   '/login': typeof AuthLoginRoute
   '/comments': typeof AuthedCommentsRoute
-  '/posts/edit': typeof AuthedPostsEditRoute
   '/posts/new': typeof AuthedPostsNewRoute
   '/posts/': typeof AuthedPostsIndexRoute
+  '/posts/edit/$slug': typeof AuthedPostsEditSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthedIndexRoute
   '/login': typeof AuthLoginRoute
   '/comments': typeof AuthedCommentsRoute
-  '/posts/edit': typeof AuthedPostsEditRoute
   '/posts/new': typeof AuthedPostsNewRoute
   '/posts': typeof AuthedPostsIndexRoute
+  '/posts/edit/$slug': typeof AuthedPostsEditSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,9 +80,9 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_authed/comments': typeof AuthedCommentsRoute
   '/_authed/': typeof AuthedIndexRoute
-  '/_authed/posts/edit': typeof AuthedPostsEditRoute
   '/_authed/posts/new': typeof AuthedPostsNewRoute
   '/_authed/posts/': typeof AuthedPostsIndexRoute
+  '/_authed/posts/edit/$slug': typeof AuthedPostsEditSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -90,11 +90,17 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/comments'
-    | '/posts/edit'
     | '/posts/new'
     | '/posts/'
+    | '/posts/edit/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/comments' | '/posts/edit' | '/posts/new' | '/posts'
+  to:
+    | '/'
+    | '/login'
+    | '/comments'
+    | '/posts/new'
+    | '/posts'
+    | '/posts/edit/$slug'
   id:
     | '__root__'
     | '/_auth'
@@ -102,9 +108,9 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_authed/comments'
     | '/_authed/'
-    | '/_authed/posts/edit'
     | '/_authed/posts/new'
     | '/_authed/posts/'
+    | '/_authed/posts/edit/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -156,18 +162,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedPostsIndexRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
-    '/_authed/posts/edit': {
-      id: '/_authed/posts/edit'
-      path: '/posts/edit'
-      fullPath: '/posts/edit'
-      preLoaderRoute: typeof AuthedPostsEditRouteImport
-      parentRoute: typeof AuthedRouteRoute
-    }
     '/_authed/posts/new': {
       id: '/_authed/posts/new'
       path: '/posts/new'
       fullPath: '/posts/new'
       preLoaderRoute: typeof AuthedPostsNewRouteImport
+      parentRoute: typeof AuthedRouteRoute
+    }
+    '/_authed/posts/edit/$slug': {
+      id: '/_authed/posts/edit/$slug'
+      path: '/posts/edit/$slug'
+      fullPath: '/posts/edit/$slug'
+      preLoaderRoute: typeof AuthedPostsEditSlugRouteImport
       parentRoute: typeof AuthedRouteRoute
     }
   }
@@ -188,17 +194,17 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 interface AuthedRouteRouteChildren {
   AuthedCommentsRoute: typeof AuthedCommentsRoute
   AuthedIndexRoute: typeof AuthedIndexRoute
-  AuthedPostsEditRoute: typeof AuthedPostsEditRoute
   AuthedPostsNewRoute: typeof AuthedPostsNewRoute
   AuthedPostsIndexRoute: typeof AuthedPostsIndexRoute
+  AuthedPostsEditSlugRoute: typeof AuthedPostsEditSlugRoute
 }
 
 const AuthedRouteRouteChildren: AuthedRouteRouteChildren = {
   AuthedCommentsRoute: AuthedCommentsRoute,
   AuthedIndexRoute: AuthedIndexRoute,
-  AuthedPostsEditRoute: AuthedPostsEditRoute,
   AuthedPostsNewRoute: AuthedPostsNewRoute,
   AuthedPostsIndexRoute: AuthedPostsIndexRoute,
+  AuthedPostsEditSlugRoute: AuthedPostsEditSlugRoute,
 }
 
 const AuthedRouteRouteWithChildren = AuthedRouteRoute._addFileChildren(

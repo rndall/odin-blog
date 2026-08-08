@@ -3,6 +3,7 @@ import {
 	DEFAULT_LIMIT,
 	DEFAULT_PAGE,
 	DEFAULT_SORT,
+	getPost,
 	getPosts,
 	type PostFilters,
 } from "./api"
@@ -23,4 +24,10 @@ export const myPostQueries = {
 			queryFn: () => getPosts(normalized),
 		})
 	},
+	details: () => [...myPostQueries.all(), "defailt"],
+	detail: (slug: string) =>
+		queryOptions({
+			queryKey: [...myPostQueries.details(), slug],
+			queryFn: () => getPost(slug),
+		}),
 }

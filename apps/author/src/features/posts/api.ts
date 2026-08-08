@@ -1,4 +1,6 @@
 import type { PostValues } from "@odin-blog/schemas/posts"
+import type { Post as SharedPost } from "@odin-blog/shared/types/posts"
+
 import { api } from "#/lib/api"
 import type { Filters } from "#/types/api"
 import type { Post } from "./types"
@@ -35,8 +37,19 @@ interface PostResponse {
 export const getPosts = (filters?: PostFilters) =>
 	api<PostsResponse>("/user/posts", { params: filters })
 
+export const getPost = (postSlug: string) =>
+	api<SharedPost>(`/posts/${postSlug}`)
+
 export const createPost = (post: PostValues) =>
 	api<PostResponse>("/posts", { method: "POST", body: post })
+
+export const editPost = ({
+	postSlug,
+	post,
+}: {
+	postSlug: string
+	post: PostValues
+}) => api<PostResponse>(`/posts/${postSlug}`, { method: "PUT", body: post })
 
 export const deletePost = (postSlug: string) =>
 	api<PostResponse>(`/posts/${postSlug}`, { method: "DELETE" })
