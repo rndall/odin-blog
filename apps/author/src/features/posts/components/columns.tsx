@@ -3,6 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { dayjs } from "@odin-blog/shared/lib/dayjs"
 import type { ColumnDef } from "@tanstack/react-table"
 import { cva } from "class-variance-authority"
+import { useState } from "react"
 
 import { Badge } from "#/components/ui/badge"
 import { Button } from "#/components/ui/button"
@@ -13,9 +14,11 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu"
+import { Spinner } from "#/components/ui/spinner"
+import { toast } from "#/components/ui/toast"
+import { useDeletePostMutation } from "../hooks/use-delete-post-mutation"
 import type { Post } from "../types"
 
 const postBadgeVariants = cva("h-6 font-medium before:content-['•']", {
@@ -82,10 +85,32 @@ export const columns: ColumnDef<Post>[] = [
 	{
 		id: "actions",
 		cell: ({ row }) => {
+			const [open, setOpen] = useState(false)
 			const post = row.original
 
+			const deletePostMutation = useDeletePostMutation()
+
+			const handleDelete = () => {
+				deletePostMutation.mutate(post.slug, {
+					onSuccess: () => {
+						toast.add({
+							type: "success",
+							description: "Post has been deleted successfully.",
+						})
+					},
+					onError: (error) => {
+						console.error(error)
+						toast.add({
+							type: "error",
+							description: "Error creating post.",
+						})
+					},
+					onSettled: () => setOpen(false),
+				})
+			}
+
 			return (
-				<DropdownMenu>
+				<DropdownMenu open={open} onOpenChange={setOpen}>
 					<DropdownMenuTrigger
 						render={
 							<Button variant="ghost" className="size-8 p-0">
@@ -97,16 +122,17 @@ export const columns: ColumnDef<Post>[] = [
 					<DropdownMenuContent align="end">
 						<DropdownMenuGroup>
 							<DropdownMenuLabel>Actions</DropdownMenuLabel>
+							<DropdownMenuItem>Edit</DropdownMenuItem>
 							<DropdownMenuItem
-								onClick={() => navigator.clipboard.writeText(String(post.id))}
+								onClick={(e) => {
+									e.preventDefault()
+									handleDelete()
+								}}
+								disabled={deletePostMutation.isPending}
 							>
-								Copy post ID
+								Delete
+								{deletePostMutation.isPending && <Spinner />}
 							</DropdownMenuItem>
-						</DropdownMenuGroup>
-						<DropdownMenuSeparator />
-						<DropdownMenuGroup>
-							<DropdownMenuItem>View customer</DropdownMenuItem>
-							<DropdownMenuItem>View payment details</DropdownMenuItem>
 						</DropdownMenuGroup>
 					</DropdownMenuContent>
 				</DropdownMenu>

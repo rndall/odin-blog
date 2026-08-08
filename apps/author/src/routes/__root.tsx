@@ -9,6 +9,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 
 import { DefaultCatchBoundary } from "#/components/default-catch-boundary"
 import { NotFound } from "#/components/not-found"
+import { Toaster } from "#/components/ui/toast"
 import { TooltipProvider } from "#/components/ui/tooltip"
 import { pageTitle } from "#/utils/page-title"
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools"
@@ -70,6 +71,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 						TanStackQueryDevtools,
 					]}
 				/>
+				<Toaster />
 				<Scripts />
 			</body>
 		</html>

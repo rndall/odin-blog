@@ -27,8 +27,16 @@ interface Meta {
 	hasPreviousPage: boolean
 }
 
+interface PostResponse {
+	message: string
+	post: Post
+}
+
 export const getPosts = (filters?: PostFilters) =>
 	api<PostsResponse>("/user/posts", { params: filters })
 
 export const createPost = (post: PostValues) =>
-	api<Post>("/posts", { method: "POST", body: post })
+	api<PostResponse>("/posts", { method: "POST", body: post })
+
+export const deletePost = (postSlug: string) =>
+	api<PostResponse>(`/posts/${postSlug}`, { method: "DELETE" })
