@@ -15,6 +15,7 @@ import {
 } from "#/components/ui/alert-dialog"
 import { Button } from "#/components/ui/button"
 import { Spinner } from "#/components/ui/spinner"
+import { toast } from "#/components/ui/toast"
 import { useDeleteCommentMutation } from "../hooks/use-delete-comment-mutation"
 
 interface DeleteCommentAlertDialogProps {
@@ -29,10 +30,27 @@ export default function DeleteCommentAlertDialog({
 	const deleteCommentMutation = useDeleteCommentMutation()
 
 	const handleDeleteComment = () => {
-		deleteCommentMutation.mutate({
-			postSlug,
-			commentId,
-		})
+		deleteCommentMutation.mutate(
+			{
+				postSlug,
+				commentId,
+			},
+			{
+				onSuccess: () => {
+					toast.add({
+						type: "success",
+						description: "Comment has been deleted successfully.",
+					})
+				},
+				onError: (error) => {
+					console.error(error)
+					toast.add({
+						type: "error",
+						description: "Error deleting comment.",
+					})
+				},
+			},
+		)
 	}
 
 	return (

@@ -5,6 +5,7 @@ import { Button } from "#/components/ui/button"
 import { Field, FieldError, FieldGroup } from "#/components/ui/field"
 import { Spinner } from "#/components/ui/spinner"
 import { Textarea } from "#/components/ui/textarea"
+import { toast } from "#/components/ui/toast"
 import { useEditCommentMutation } from "../hooks/use-edit-comment-mutation"
 
 interface EditCommentFormProps {
@@ -37,6 +38,17 @@ export function EditCommentForm({
 				{
 					onSuccess: () => {
 						onEditSuccess()
+						toast.add({
+							type: "success",
+							description: "Comment has been edited successfully.",
+						})
+					},
+					onError: (error) => {
+						console.error(error)
+						toast.add({
+							type: "error",
+							description: "Error editing comment.",
+						})
 					},
 				},
 			)
