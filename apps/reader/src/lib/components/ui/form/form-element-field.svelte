@@ -1,5 +1,4 @@
 <script lang="ts" generics="T extends Record<string, unknown>, U extends FormPathLeaves<T>">
-
 	import * as FormPrimitive from 'formsnap'
 	import { cn, type WithElementRef, type WithoutChildren } from '$lib/utils.js'
 

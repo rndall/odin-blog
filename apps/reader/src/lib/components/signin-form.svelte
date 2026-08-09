@@ -21,7 +21,7 @@
 
 			try {
 				const data = await api.auth.signIn(f.data)
-				auth.setAuth(data.user, data.token)
+				auth.setAuth(data.token, data.user)
 			} catch (error) {
 				setError(
 					f,

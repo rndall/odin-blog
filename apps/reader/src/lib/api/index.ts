@@ -60,3 +60,5 @@ export const createApi = (fetch: SvelteFetch) => ({
 	postComments: postComments(createRequest(fetch)),
 	auth: auth(createRequest(fetch))
 })
+
+export const api = createApi(fetch)

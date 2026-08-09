@@ -1,7 +1,9 @@
 <script lang="ts">
 	import './layout.css'
+	import { onMount } from 'svelte'
 	import { page } from '$app/state'
 	import favicon from '$lib/assets/favicon.svg'
+	import { auth } from '$lib/auth.svelte'
 	import * as Tooltip from '$lib/components/ui/tooltip'
 	import Footer from './footer.svelte'
 	import Navbar from './navbar.svelte'
@@ -10,6 +12,10 @@
 	const siteTitle = 'The Digital Atelier'
 
 	let { children } = $props()
+
+	onMount(() => {
+		auth.validateToken()
+	})
 </script>
 
 <svelte:head>

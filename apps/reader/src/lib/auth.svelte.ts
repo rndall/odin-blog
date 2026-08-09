@@ -1,4 +1,5 @@
 import type { ReaderWithoutBio } from '@odin-blog/shared/types/users.js'
+import { api } from './api'
 
 class AuthStore {
 	// biome-ignore lint/style/noNonNullAssertion: returns null on null
@@ -21,6 +22,19 @@ class AuthStore {
 		localStorage.removeItem('user')
 		this.user = null
 		this.token = null
+	}
+
+	async validateToken() {
+		if (!this.token) {
+			this.logout()
+			return
+		}
+
+		try {
+			await api.auth.me()
+		} catch (err) {
+			console.error('Failed to validate token with server', err)
+		}
 	}
 }
 
