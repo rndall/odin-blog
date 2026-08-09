@@ -1,0 +1,56 @@
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+
+import { AppSidebar } from "#/components/app-sidebar"
+import { SidebarProvider, SidebarTrigger } from "#/components/ui/sidebar"
+import { Spinner } from "#/components/ui/spinner"
+import { authQueries } from "#/features/auth/queries"
+
+export const Route = createFileRoute("/_authed")({
+	beforeLoad: async ({ context, location }) => {
+		const data = await context.queryClient
+			.ensureQueryData(authQueries.me())
+			.catch(() => null)
+
+		if (!data?.user) {
+			throw redirect({
+				to: "/login",
+				search: {
+					redirect: location.href,
+				},
+			})
+		}
+		return { user: data?.user }
+	},
+	pendingComponent: PendingLayout,
+	component: Layout,
+})
+
+function AppShell({ children }: { children: React.ReactNode }) {
+	return (
+		<SidebarProvider>
+			<AppSidebar />
+			<main className="container mx-auto flex-1 px-4 py-8 md:px-12">
+				<SidebarTrigger className="absolute top-1 left-1 md:hidden" />
+				{children}
+			</main>
+		</SidebarProvider>
+	)
+}
+
+function Layout() {
+	return (
+		<AppShell>
+			<Outlet />
+		</AppShell>
+	)
+}
+
+function PendingLayout() {
+	return (
+		<AppShell>
+			<div className="flex h-full min-h-[50vh] items-center justify-center">
+				<Spinner className="size-8" />
+			</div>
+		</AppShell>
+	)
+}

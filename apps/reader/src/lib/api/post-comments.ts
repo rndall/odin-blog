@@ -1,4 +1,4 @@
-import type { PostComment } from '@odin-blog/shared/post-comments'
+import type { PostComment } from '@odin-blog/shared/types/post-comments'
 import type { Request } from '.'
 
 export const postComments = (request: Request) => ({

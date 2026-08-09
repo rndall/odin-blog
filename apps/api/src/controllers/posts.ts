@@ -1,9 +1,10 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Validated user through auth middleware */
+
+import { NotFoundError, UnauthorizedError } from "@odin-blog/shared/errors"
 import type { Response } from "express"
 import { nanoid } from "nanoid"
 import slugify from "slugify"
 
-import { NotFoundError, UnauthorizedError } from "@/errors"
 import { prisma } from "@/lib/prisma"
 import type {
 	CreatePostRequest,
@@ -31,9 +32,7 @@ export const getPosts = async (req: GetPostsRequest, res: Response) => {
 		take: limit + 1,
 		...(cursor && {
 			skip: 1,
-			cursor: {
-				id: cursor.id,
-			},
+			cursor,
 		}),
 		where: { published: true },
 		select: {

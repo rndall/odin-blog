@@ -1,5 +1,6 @@
+import { UnauthorizedError } from "@odin-blog/shared/errors"
 import type { WeakRequestHandler } from "express-zod-safe"
-import { UnauthorizedError } from "@/errors"
+
 import { passport } from "@/lib/passport"
 
 export const authenticate: WeakRequestHandler = (req, res, next) => {

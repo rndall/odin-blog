@@ -1,14 +1,15 @@
 import z from "zod"
 
-export const cursorPayloadSchema = z.object({
+export const baseCursorSchema = z.object({
 	id: z.number(),
-	publishedAt: z.coerce.date(),
 })
-export type CursorPayload = z.infer<typeof cursorPayloadSchema>
 
-export const cursorPaginationQuerySchema = z.object({
-	limit: z.coerce.number().positive().max(100).default(10),
-	cursor: z.preprocess(
+export type BaseCursor = {
+	id: number
+} & Record<string, string | number | Date>
+
+export const createCursorSchema = <T extends z.ZodTypeAny>(schema: T) =>
+	z.preprocess(
 		(val) => (val === "" ? undefined : val),
 		z
 			.string()
@@ -16,7 +17,7 @@ export const cursorPaginationQuerySchema = z.object({
 				try {
 					const decoded = Buffer.from(val, "base64url").toString("utf8")
 
-					return cursorPayloadSchema.parse(JSON.parse(decoded))
+					return schema.parse(JSON.parse(decoded))
 				} catch {
 					ctx.issues.push({
 						code: "custom",
@@ -28,6 +29,4 @@ export const cursorPaginationQuerySchema = z.object({
 				}
 			})
 			.optional(),
-	),
-})
-export type CursorPaginationQuery = z.infer<typeof cursorPaginationQuerySchema>
+	)
