@@ -12,5 +12,5 @@ export const posts = (request: Request) => ({
 		const queryString = toQueryString(params)
 		return request.get<GetPostsResponse>(`posts${queryString}`)
 	},
-	detail: (slug: string) => request.get<Post>(`posts/${slug}`),
+	detail: (slug: string) => request.get<Post>(`posts/${slug}`)
 })

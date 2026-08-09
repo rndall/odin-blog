@@ -1,14 +1,14 @@
 export const toQueryString = (obj?: Record<string, unknown>): string => {
-    if (!obj) return '';
+	if (!obj) return ''
 
-    const params = new URLSearchParams();
-    
-    for (const [key, value] of Object.entries(obj)) {
-        if (value !== null && value !== undefined) {
-            params.append(key, String(value));
-        }
-    }
+	const params = new URLSearchParams()
 
-    const queryString = params.toString();
-    return queryString ? `?${queryString}` : '';
-};
+	for (const [key, value] of Object.entries(obj)) {
+		if (value !== null && value !== undefined) {
+			params.append(key, String(value))
+		}
+	}
+
+	const queryString = params.toString()
+	return queryString ? `?${queryString}` : ''
+}

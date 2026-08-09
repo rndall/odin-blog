@@ -11,3 +11,6 @@ export interface Author extends User<"AUTHOR"> {}
 
 export const USER_ROLES = ["USER", "AUTHOR"] as const
 export type UserRole = (typeof USER_ROLES)[number]
+
+export type AuthorWithoutBio = Omit<Author, "bio">
+export type ReaderWithoutBio = Omit<Reader, "bio">

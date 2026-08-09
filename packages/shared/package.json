@@ -5,11 +5,11 @@
 	"description": "",
 	"main": "index.js",
 	"exports": {
-		"./types/posts": "./src/types/posts.ts",
-		"./types/users": "./src/types/users.ts",
-		"./types/post-comments": "./src/types/post-comments.ts",
+		"./types/*": "./src/types/*",
 		"./errors": "./src/errors.ts",
-		"./lib/dayjs": "./src/lib/dayjs.ts"
+		"./lib/*": "./src/lib/*",
+		"./responses/*": "./src/responses/*",
+		"./utils/*": "./src/utils/*"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
