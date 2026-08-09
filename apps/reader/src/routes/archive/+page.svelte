@@ -1,15 +1,19 @@
 <script lang="ts">
 	import { dayjs } from '@odin-blog/shared/lib/dayjs'
 	import { resolve } from '$app/paths'
+	import { createApi } from '$lib/api'
 	import * as Item from '$lib/components/ui/item'
+	import Spinner from '$lib/components/ui/spinner/spinner.svelte'
 	import * as Tooltip from '$lib/components/ui/tooltip'
 	import type { Post } from '$lib/types/posts'
 	import type { PageProps } from './$types'
 
 	let { data }: PageProps = $props()
 
-	const archive = $derived(
-		data.data.posts.reduce<Record<string, Post[]>>((acc, curr) => {
+	let posts = $derived(data.data.posts)
+
+	let archive = $derived(
+		posts.reduce<Record<string, Post[]>>((acc, curr) => {
 			const year = new Date(curr.publishedAt).getFullYear()
 
 			if (!acc[year]) {
@@ -21,8 +25,48 @@
 			return acc
 		}, {})
 	)
+	let nextCursor = $derived(data.data.nextCursor)
+	let isLoading = $state(false)
 
-	const sortedYears = $derived(Object.keys(archive).sort((a, b) => Number(b) - Number(a)))
+	let sentinel: HTMLDivElement
+
+	async function loadMore() {
+		if (isLoading || !nextCursor) return
+		isLoading = true
+		const api = createApi(fetch)
+
+		try {
+			const data = await api.posts.list({ cursor: nextCursor })
+
+			posts = [...posts, ...data.posts]
+			nextCursor = data.nextCursor
+		} catch (error) {
+			console.error('Failed to load more posts:', error)
+		} finally {
+			isLoading = false
+		}
+	}
+
+	$effect(() => {
+		if (!sentinel) return
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && nextCursor && !isLoading) {
+					loadMore()
+				}
+			},
+			{ rootMargin: '200px' }
+		)
+
+		observer.observe(sentinel)
+
+		return () => {
+			if (sentinel) observer.unobserve(sentinel)
+		}
+	})
+
+	let sortedYears = $derived(Object.keys(archive).sort((a, b) => Number(b) - Number(a)))
 </script>
 
 <div class="my-8 flex flex-col gap-12">
@@ -69,5 +113,11 @@
 				</ul>
 			</section>
 		{/each}
+
+		<div bind:this={sentinel}>
+			{#if true && nextCursor}
+				<Spinner class="mx-auto size-8" />
+			{/if}
+		</div>
 	</section>
 </div>
