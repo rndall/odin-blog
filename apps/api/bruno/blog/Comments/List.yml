@@ -6,6 +6,11 @@ info:
 http:
   method: GET
   url: "{{baseUrl}}/posts/{{postSlug}}/comments"
+  params:
+    - name: sort
+      value: -createdAt
+      type: query
+      disabled: true
   auth: inherit
 
 settings:

@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { Search01Icon } from '@hugeicons/core-free-icons'
-	import { HugeiconsIcon } from '@hugeicons/svelte'
 	import { resolve } from '$app/paths'
 	import { page } from '$app/state'
+	import { auth } from '$lib/auth.svelte'
 	import { Button } from '$lib/components/ui/button'
 </script>
 
@@ -24,7 +23,7 @@
 			</li>
 			<li>
 				<Button
-					aria-current={page.url.pathname === '/archive'}
+					aria-current={page.url.pathname.includes('/archive')}
 					href={resolve('/archive')}
 					variant="link">Archive</Button
 				>
@@ -33,9 +32,10 @@
 	</nav>
 
 	<div class="flex justify-end gap-4">
-		<Button size="icon" variant="ghost" aria-label="search">
-			<HugeiconsIcon class="text-primary" strokeWidth={3} icon={Search01Icon} />
-		</Button>
-		<Button class="rounded-sm">Sign In</Button>
+		{#if auth.isAuthenticated}
+			<Button onclick={() => auth.logout()} class="rounded-sm">Log out</Button>
+		{:else}
+			<Button href={resolve('/sign-in')} class="rounded-sm">Sign In</Button>
+		{/if}
 	</div>
 </header>

@@ -26,7 +26,7 @@ export function buildSortSchema<T extends Record<string, unknown>>(
 			const parsed = fieldEnum.safeParse(field)
 			if (!parsed.success) {
 				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
+					code: "custom",
 					message: `Invalid sort field: "${field}". Allowed: ${allowedFields.join(", ")}`,
 				})
 				return z.NEVER

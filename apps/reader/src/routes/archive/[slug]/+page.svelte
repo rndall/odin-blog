@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { dayjs } from '@odin-blog/shared/lib/dayjs'
-	import type { PostComment } from '@odin-blog/shared/types/post-comments'
+	import { dayjs } from '@odin-blog/shared/lib/dayjs.ts'
+	import type { PostComment } from '@odin-blog/shared/types/post-comments.ts'
+	import { auth } from '$lib/auth.svelte'
 	import * as Item from '$lib/components/ui/item'
 	import type { PageProps } from './$types'
+	import CommentForm from './comment-form.svelte'
 
 	let { data }: PageProps = $props()
 </script>
@@ -33,11 +35,16 @@
 
 	<section class="flex flex-col gap-12">
 		<h2 class="font-serif text-3xl italic">Dialogue</h2>
+
+		{#if auth.isAuthenticated}
+			<CommentForm />
+		{/if}
+
 		{#snippet commentItem(comment: PostComment)}
 			<Item.Root class="rounded-md bg-[#f3f3f6] py-6">
 				<Item.Content>
 					<Item.Title class="font-sans font-bold text-primary">{comment.user.fullName}</Item.Title>
-					<Item.Description class="text-black">{comment.content}</Item.Description>
+					<Item.Description class="line-clamp-none text-black">{comment.content}</Item.Description>
 				</Item.Content>
 				<Item.Content class="self-start">
 					<Item.Description>{dayjs(comment.updatedAt).fromNow()}</Item.Description>

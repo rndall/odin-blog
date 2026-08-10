@@ -34,10 +34,11 @@ const getCommentOrThrow = async (commentId: number, slug: string) => {
 
 export const getComments = async (req: GetCommentsRequest, res: Response) => {
 	const { slug } = req.params
+	const { sort } = req.query
 
 	const comments = await prisma.comment.findMany({
 		where: { post: { slug } },
-		orderBy: { createdAt: "asc" },
+		orderBy: sort,
 		select: {
 			id: true,
 			content: true,

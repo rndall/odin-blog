@@ -29,7 +29,7 @@
 			</Card.Header>
 			<Card.Content>
 				<p class="text-lg font-medium text-muted-foreground">
-					{firstSentence}
+					{@html firstSentence}
 				</p>
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-3">
@@ -53,7 +53,7 @@
 						</Card.Title>
 					</Card.Header>
 					<Card.Content class="line-clamp-4 flex-1 text-muted-foreground">
-						<p>{post.content}</p>
+						<p>{@html post.content}</p>
 					</Card.Content>
 					<div class="px-6">
 						<Separator />

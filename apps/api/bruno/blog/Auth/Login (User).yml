@@ -5,12 +5,12 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/reader/login"
+  url: "{{baseUrl}}/login"
   body:
     type: json
     data: |-
       {
-        "username": "user",
+        "username": "reader",
         "password": "password"
       }
   auth: inherit
