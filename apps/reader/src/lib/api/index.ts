@@ -1,4 +1,4 @@
-import { throwHttpError } from '@odin-blog/shared/utils/api.js'
+import { throwHttpError } from '@odin-blog/shared/utils/api.ts'
 
 import { goto } from '$app/navigation'
 import { resolve } from '$app/paths'

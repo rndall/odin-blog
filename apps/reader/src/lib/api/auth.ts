@@ -1,6 +1,6 @@
 import type { LoginValues } from '@odin-blog/schemas/auth'
-import type { LoginResponse } from '@odin-blog/shared/responses/auth.js'
-import type { User } from '@odin-blog/shared/types/users.js'
+import type { LoginResponse } from '@odin-blog/shared/responses/auth.ts'
+import type { User } from '@odin-blog/shared/types/users.ts'
 
 import type { Request } from '.'
 

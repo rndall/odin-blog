@@ -37,7 +37,7 @@
 			<Item.Root class="rounded-md bg-[#f3f3f6] py-6">
 				<Item.Content>
 					<Item.Title class="font-sans font-bold text-primary">{comment.user.fullName}</Item.Title>
-					<Item.Description class="text-black">{comment.content}</Item.Description>
+					<Item.Description class="line-clamp-none text-black">{comment.content}</Item.Description>
 				</Item.Content>
 				<Item.Content class="self-start">
 					<Item.Description>{dayjs(comment.updatedAt).fromNow()}</Item.Description>

@@ -1,10 +1,11 @@
 import type { commentSchema } from "@odin-blog/schemas/comments"
 import type { ValidatedRequest } from "express-zod-safe"
-import type { postCommentParamsSchema } from "@/schemas/comments"
+import type { commentsQuery, postCommentParamsSchema } from "@/schemas/comments"
 import type { postSlugParamsSchema } from "@/schemas/posts"
 
 export type GetCommentsRequest = ValidatedRequest<{
 	params: typeof postSlugParamsSchema
+	query: typeof commentsQuery
 }>
 export type CreateCommentRequest = ValidatedRequest<{
 	params: typeof postSlugParamsSchema

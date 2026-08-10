@@ -1,4 +1,4 @@
-import type {  User } from '@odin-blog/shared/types/users.js'
+import type {  User } from '@odin-blog/shared/types/users.ts'
 import { api } from './api'
 
 type UserWithoutBio = Omit<User, "bio">

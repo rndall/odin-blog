@@ -13,12 +13,16 @@ import {
 
 import { authenticate } from "@/middlewares/authenticate"
 
-import { postCommentParamsSchema } from "@/schemas/comments"
+import { commentsQuery, postCommentParamsSchema } from "@/schemas/comments"
 import { postSlugParamsSchema } from "@/schemas/posts"
 
 const router: Router = Router({ mergeParams: true })
 
-router.get("/", validate({ params: postSlugParamsSchema }), getComments)
+router.get(
+	"/",
+	validate({ params: postSlugParamsSchema, query: commentsQuery }),
+	getComments,
+)
 router.post(
 	"/",
 	authenticate,
