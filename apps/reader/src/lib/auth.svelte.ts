@@ -1,7 +1,7 @@
-import type {  User } from '@odin-blog/shared/types/users.ts'
+import type { User } from '@odin-blog/shared/types/users.ts'
 import { api } from './api'
 
-type UserWithoutBio = Omit<User, "bio">
+type UserWithoutBio = Omit<User, 'bio'>
 
 class AuthStore {
 	// biome-ignore lint/style/noNonNullAssertion: returns null on null
