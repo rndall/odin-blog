@@ -23,7 +23,7 @@
 			</li>
 			<li>
 				<Button
-					aria-current={page.url.pathname === '/archive'}
+					aria-current={page.url.pathname.includes('/archive')}
 					href={resolve('/archive')}
 					variant="link">Archive</Button
 				>
