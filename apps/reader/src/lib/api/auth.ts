@@ -6,6 +6,6 @@ import type { Request } from '.'
 
 export const auth = (request: Request) => ({
 	signIn: (credentials: Omit<LoginValues, 'client'>) =>
-		request.post<LoginResponse<'USER'>>('reader/login', credentials),
+		request.post<LoginResponse>('login', credentials),
 	me: () => request.get<{ user: User }>('user/me')
 })

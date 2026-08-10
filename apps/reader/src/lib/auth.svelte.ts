@@ -1,16 +1,18 @@
-import type { ReaderWithoutBio } from '@odin-blog/shared/types/users.js'
+import type {  User } from '@odin-blog/shared/types/users.js'
 import { api } from './api'
+
+type UserWithoutBio = Omit<User, "bio">
 
 class AuthStore {
 	// biome-ignore lint/style/noNonNullAssertion: returns null on null
-	user = $state<ReaderWithoutBio | null>(JSON.parse(localStorage.getItem('user')!))
+	user = $state<UserWithoutBio | null>(JSON.parse(localStorage.getItem('user')!))
 	token = $state(localStorage.getItem('jwt_token'))
 
 	get isAuthenticated() {
 		return !!this.token && !!this.user
 	}
 
-	setAuth(token: string, user: ReaderWithoutBio) {
+	setAuth(token: string, user: UserWithoutBio) {
 		localStorage.setItem('jwt_token', token)
 		localStorage.setItem('user', JSON.stringify(user))
 		this.token = token

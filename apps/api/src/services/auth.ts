@@ -17,14 +17,19 @@ export const generateAuthToken = (userId: number, role: UserRole) => {
 export const verifyUserCredentials = async (
 	username: string,
 	password: string,
-	expectedRole: UserRole,
 ) => {
 	const user = await prisma.user.findUnique({ where: { username } })
 	const isValid = user && (await compare(password, user.password))
-	if (!isValid || user.role !== expectedRole) {
+	if (!isValid) {
 		throw new UnauthorizedError("Invalid credentials")
 	}
 
 	const { password: _, bio, ...userWithoutPassword } = user
 	return userWithoutPassword
+}
+
+export const verifyExpectedRole = (role: UserRole, expectedRole: UserRole) => {
+	if (role !== expectedRole) {
+		throw new UnauthorizedError("Invalid credentials")
+	}
 }

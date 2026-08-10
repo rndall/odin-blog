@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { dayjs } from '@odin-blog/shared/lib/dayjs'
-	import type { PostComment } from '@odin-blog/shared/types/post-comments'
+	import { dayjs } from '@odin-blog/shared/lib/dayjs.ts'
+	import type { PostComment } from '@odin-blog/shared/types/post-comments.ts'
 	import * as Item from '$lib/components/ui/item'
 	import type { PageProps } from './$types'
 
