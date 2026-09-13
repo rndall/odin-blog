@@ -5,9 +5,7 @@ import type { User } from '@odin-blog/shared/types/users.ts'
 import type { Request } from '.'
 
 export const auth = (request: Request) => ({
-  signUp: (credentials: SignUpValues) =>
-		request.post<SignUpResponse>('sign-up', credentials),
-	signIn: (credentials: LoginValues) =>
-		request.post<LoginResponse>('login', credentials),
+	signUp: (credentials: SignUpValues) => request.post<SignUpResponse>('sign-up', credentials),
+	signIn: (credentials: LoginValues) => request.post<LoginResponse>('login', credentials),
 	me: () => request.get<{ user: User }>('user/me')
 })

@@ -88,7 +88,7 @@
 				</Form.Field>
 				<Field.Group>
 					<Field.Field>
-					    <FieldError errors={$errors._errors?.map((error) => ({ message: error }))} />
+						<FieldError errors={$errors._errors?.map((error) => ({ message: error }))} />
 						<Button type="submit">Create Account</Button>
 						<!-- <Button variant="outline" type="button">Sign up with Google</Button> -->
 						<Field.Description class="px-6 text-center">

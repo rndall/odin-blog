@@ -95,12 +95,7 @@ export interface FileRouteTypes {
     | '/posts/edit/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/login'
-    | '/comments'
-    | '/posts/new'
-    | '/posts'
-    | '/posts/edit/$slug'
+    '/' | '/login' | '/comments' | '/posts/new' | '/posts' | '/posts/edit/$slug'
   id:
     | '__root__'
     | '/_auth'

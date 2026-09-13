@@ -24,7 +24,9 @@
 		<Card.Root class="mx-auto max-w-2xl rounded-sm px-10 py-12 text-center shadow-xs ring-0">
 			<Card.Header>
 				<Card.Title class="line-clamp-3 text-6xl font-normal italic">
-					{firstPost.title}
+					<a href={resolve('/archive/[slug]', { slug: firstPost.slug })} class="hover:underline">
+						{firstPost.title}
+					</a>
 				</Card.Title>
 			</Card.Header>
 			<Card.Content>
@@ -49,7 +51,9 @@
 				>
 					<Card.Header>
 						<Card.Title class="text-3xl">
-							{post.title}
+							<a href={resolve('/archive/[slug]', { slug: post.slug })} class="hover:underline">
+								{post.title}
+							</a>
 						</Card.Title>
 					</Card.Header>
 					<Card.Content class="line-clamp-4 flex-1 text-muted-foreground">
