@@ -44,6 +44,7 @@
 	"dependencies": {
 		"@odin-blog/schemas": "workspace:*",
 		"@odin-blog/shared": "workspace:*",
-		"dayjs": "^1.11.20"
+		"dayjs": "^1.11.20",
+		"zod": "^4.6.2"
 	}
 }

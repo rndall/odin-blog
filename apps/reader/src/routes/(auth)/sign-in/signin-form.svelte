@@ -3,13 +3,14 @@
 	import { HttpError } from '@odin-blog/shared/errors'
 	import { defaults, setError, superForm } from 'sveltekit-superforms'
 	import { zod4, zod4Client } from 'sveltekit-superforms/adapters'
+	import { resolve } from '$app/paths'
 	import { createApi } from '$lib/api'
 	import { auth } from '$lib/auth.svelte'
 	import * as Card from '$lib/components/ui/card/index.js'
-	import { Field, FieldGroup } from '$lib/components/ui/field/index.js'
+	import FieldError from '$lib/components/ui/field/field-error.svelte'
+	import { Field, FieldDescription, FieldGroup } from '$lib/components/ui/field/index.js'
 	import * as Form from '$lib/components/ui/form/index.js'
 	import { Input } from '$lib/components/ui/input/index.js'
-	import FieldError from './ui/field/field-error.svelte'
 
 	const api = createApi(fetch)
 
@@ -76,9 +77,9 @@
 						</svg>
 						Login with Google
 					</Button> -->
-					<!-- <FieldDescription class="text-center">
-						Don't have an account? <a href="##">Sign up</a>
-					</FieldDescription> -->
+					<FieldDescription class="text-center">
+						Don't have an account? <a href={resolve('/(auth)/sign-up')}>Sign up</a>
+					</FieldDescription>
 				</Field>
 			</FieldGroup>
 		</form>

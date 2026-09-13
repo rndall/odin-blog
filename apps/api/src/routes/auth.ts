@@ -1,12 +1,17 @@
-import { loginSchema, roleLoginSchema } from "@odin-blog/schemas/auth"
+import {
+	loginSchema,
+	roleLoginSchema,
+	signUpSchema,
+} from "@odin-blog/schemas/auth"
 
 import { Router } from "express"
 import validate from "express-zod-safe"
 
-import { login, roleLogin } from "@/controllers/auth"
+import { login, roleLogin, signUp } from "@/controllers/auth"
 
 const router: Router = Router()
 
+router.post("/sign-up", validate({ body: signUpSchema }), signUp)
 router.post("/login", validate({ body: loginSchema }), login)
 router.post(
 	"/author/login",

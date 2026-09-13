@@ -8,3 +8,7 @@ export interface LoginResponse<T extends UserRole = UserRole> {
 	token: string
 	user: T extends "AUTHOR" ? AuthorWithoutBio : ReaderWithoutBio
 }
+
+export interface SignUpResponse extends LoginResponse<"USER"> {
+	message: string
+}
