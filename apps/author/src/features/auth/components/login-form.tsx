@@ -45,7 +45,7 @@ export function LoginForm({
 			password: "",
 		},
 		validators: {
-			onSubmit: loginSchema.omit({ client: true }),
+			onSubmit: loginSchema,
 		},
 		onSubmit: ({ value }) =>
 			loginMutation.mutate(value, {
