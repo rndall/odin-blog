@@ -12,23 +12,33 @@ import type {
 	RoleLoginRequest,
 	SignUpRequest,
 } from "@/types/auth"
+import { PrismaClientKnownRequestError } from "generated/prisma/internal/prismaNamespace"
 
 export const signUp = async (req: SignUpRequest, res: Response) => {
 	const { password, ...rest } = req.body
 
 	const hashedPassword = await bcrypt.hash(password, 10)
 
-	const user = await prisma.user.create({
-		data: { ...rest, password: hashedPassword },
-	})
+	try {
+		const user = await prisma.user.create({
+			data: { ...rest, password: hashedPassword },
+		})
+		const { password: _, bio, ...userWithoutBio } = user
 
-	const { password: _, bio, ...userWithoutBio } = user
+		const token = generateAuthToken(user.id, user.role)
 
-	const token = generateAuthToken(user.id, user.role)
-
-	return res
-		.status(201)
-		.json({ message: "User sign up successful", token, user: userWithoutBio })
+		return res
+			.status(201)
+			.json({ message: "User sign up successful", token, user: userWithoutBio })
+	} catch (error) {
+		if (
+			error instanceof PrismaClientKnownRequestError &&
+			error.code === "P2002"
+		) {
+			return res.status(409).json({ message: "Username already exists" })
+		}
+		return res.status(400).json({ message: "User sign up failed", error })
+	}
 }
 
 export const login = async (req: LoginRequest, res: Response) => {
