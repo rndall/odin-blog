@@ -1,6 +1,8 @@
 packages:
   - "apps/*"
   - "packages/*"
+overrides:
+  "zod@^4.0.0": 4.6.5
 allowBuilds:
   '@hugeicons/svelte': true
   '@prisma/engines': true
