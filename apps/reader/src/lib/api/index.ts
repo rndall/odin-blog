@@ -1,9 +1,8 @@
 import { throwHttpError } from '@odin-blog/shared/utils/api.ts'
-
+import { auth as authStore } from '#lib/auth.svelte.js'
+import { PUBLIC_API_BASE_URL } from '$app/env/public'
 import { goto } from '$app/navigation'
 import { resolve } from '$app/paths'
-import { PUBLIC_API_BASE_URL } from '$env/static/public'
-import { auth as authStore } from '$lib/auth.svelte'
 
 import { auth } from './auth'
 import { postComments } from './post-comments'
@@ -31,7 +30,7 @@ const createApiFetch =
 
 		if (res.status === 401) {
 			authStore.logout()
-			goto(resolve('/sign-in'))
+			goto(resolve('/(auth)/sign-in'))
 		}
 
 		if (!res.ok) {

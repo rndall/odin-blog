@@ -2,9 +2,9 @@
 	import './layout.css'
 	import { onMount } from 'svelte'
 	import { page } from '$app/state'
-	import favicon from '$lib/assets/favicon.svg'
-	import { auth } from '$lib/auth.svelte'
-	import * as Tooltip from '$lib/components/ui/tooltip'
+	import favicon from '#lib/assets/favicon.svg'
+	import { auth } from '#lib/auth.svelte.js'
+	import * as Tooltip from '#lib/components/ui/tooltip/index.js'
 	import Footer from './footer.svelte'
 	import Navbar from './navbar.svelte'
 

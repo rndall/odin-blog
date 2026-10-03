@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { dayjs } from '@odin-blog/shared/lib/dayjs'
+	import { dayjs } from '@odin-blog/shared/lib/dayjs.ts'
 	import { resolve } from '$app/paths'
-	import Button from '$lib/components/ui/button/button.svelte'
-	import * as Card from '$lib/components/ui/card'
-	import * as Item from '$lib/components/ui/item'
-	import { Separator } from '$lib/components/ui/separator'
-	import type { Post } from '$lib/types/posts'
+	import Button from '#lib/components/ui/button/button.svelte'
+	import * as Card from '#lib/components/ui/card/index.js'
+	import * as Item from '#lib/components/ui/item/index.js'
+	import { Separator } from '#lib/components/ui/separator/index.js'
+	import type { Post } from '#lib/types/posts.js'
 	import type { PageProps } from './$types'
 
 	let { data }: PageProps = $props()

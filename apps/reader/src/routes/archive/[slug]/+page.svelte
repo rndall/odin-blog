@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { dayjs } from '@odin-blog/shared/lib/dayjs.ts'
 	import type { PostComment } from '@odin-blog/shared/types/post-comments.ts'
-	import { auth } from '$lib/auth.svelte'
-	import * as Item from '$lib/components/ui/item'
+	import { auth } from '#lib/auth.svelte.js'
+	import * as Item from '#lib/components/ui/item/index.js'
 	import type { PageProps } from './$types'
 	import CommentForm from './comment-form.svelte'
 

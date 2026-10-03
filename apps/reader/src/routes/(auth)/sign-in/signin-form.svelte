@@ -4,13 +4,13 @@
 	import { defaults, setError, superForm } from 'sveltekit-superforms'
 	import { zod4, zod4Client } from 'sveltekit-superforms/adapters'
 	import { resolve } from '$app/paths'
-	import { createApi } from '$lib/api'
-	import { auth } from '$lib/auth.svelte'
-	import * as Card from '$lib/components/ui/card/index.js'
-	import FieldError from '$lib/components/ui/field/field-error.svelte'
-	import { Field, FieldDescription, FieldGroup } from '$lib/components/ui/field/index.js'
-	import * as Form from '$lib/components/ui/form/index.js'
-	import { Input } from '$lib/components/ui/input/index.js'
+	import { createApi } from '#lib/api/index.js'
+	import { auth } from '#lib/auth.svelte.js'
+	import * as Card from '#lib/components/ui/card/index.js'
+	import FieldError from '#lib/components/ui/field/field-error.svelte'
+	import { Field, FieldDescription, FieldGroup } from '#lib/components/ui/field/index.js'
+	import * as Form from '#lib/components/ui/form/index.js'
+	import { Input } from '#lib/components/ui/input/index.js'
 
 	const api = createApi(fetch)
 

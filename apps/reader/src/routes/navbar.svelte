@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { auth } from '#lib/auth.svelte.js'
+	import { Button } from '#lib/components/ui/button/index.js'
 	import { resolve } from '$app/paths'
 	import { page } from '$app/state'
-	import { auth } from '$lib/auth.svelte'
-	import { Button } from '$lib/components/ui/button'
 </script>
 
 <header class="grid grid-cols-3 items-center bg-[#fefefe]">
@@ -35,7 +35,7 @@
 		{#if auth.isAuthenticated}
 			<Button onclick={() => auth.logout()} class="rounded-sm">Log out</Button>
 		{:else}
-			<Button href={resolve('/sign-in')} class="rounded-sm">Sign In</Button>
+			<Button href={resolve('/(auth)/sign-in')} class="rounded-sm">Sign In</Button>
 		{/if}
 	</div>
 </header>

@@ -1,4 +1,4 @@
-import { createApi } from '$lib/api'
+import { createApi } from '#lib/api/index.js'
 import type { PageLoad } from './$types'
 
 export const load: PageLoad = async ({ fetch }) => {

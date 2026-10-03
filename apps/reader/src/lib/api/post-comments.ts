@@ -1,7 +1,7 @@
 import type { CommentValues } from '@odin-blog/schemas/comments'
 import type { PostComment } from '@odin-blog/shared/types/post-comments.ts'
 
-import { toQueryString } from '$lib/utils/api'
+import { toQueryString } from '#lib/utils/api.js'
 import type { Request } from '.'
 
 type CreateCommentResponse = Omit<PostComment, 'user'> & {

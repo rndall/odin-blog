@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { dayjs } from '@odin-blog/shared/lib/dayjs'
+	import { dayjs } from '@odin-blog/shared/lib/dayjs.ts'
+	import { createApi } from '#lib/api/index.js'
+	import * as Item from '#lib/components/ui/item/index.js'
+	import Spinner from '#lib/components/ui/spinner/spinner.svelte'
+	import * as Tooltip from '#lib/components/ui/tooltip/index.js'
+	import type { Post } from '#lib/types/posts.js'
 	import { resolve } from '$app/paths'
-	import { createApi } from '$lib/api'
-	import * as Item from '$lib/components/ui/item'
-	import Spinner from '$lib/components/ui/spinner/spinner.svelte'
-	import * as Tooltip from '$lib/components/ui/tooltip'
-	import type { Post } from '$lib/types/posts'
 	import type { PageProps } from './$types'
 
 	let { data }: PageProps = $props()
@@ -81,7 +81,7 @@
 	<section class="flex flex-col gap-12">
 		{#snippet postArchive(post: Post)}
 			<li>
-				<a class="group" href={resolve(`/archive/${post.slug}`)}>
+				<a class="group" href={resolve('/archive/[slug]', { slug: post.slug })}>
 					<Item.Root class="gap-1 p-0">
 						<Item.Header>
 							<Tooltip.Root>

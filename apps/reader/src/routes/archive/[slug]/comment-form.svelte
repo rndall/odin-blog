@@ -3,11 +3,11 @@
 	import { HttpError } from '@odin-blog/shared/errors'
 	import { defaults, setError, superForm } from 'sveltekit-superforms'
 	import { zod4, zod4Client } from 'sveltekit-superforms/adapters'
+	import { api } from '#lib/api/index.js'
+	import { Field, FieldError, FieldGroup } from '#lib/components/ui/field/index.js'
+	import * as Form from '#lib/components/ui/form/index.js'
+	import { Textarea } from '#lib/components/ui/textarea/index.js'
 	import { page } from '$app/state'
-	import { api } from '$lib/api'
-	import { Field, FieldError, FieldGroup } from '$lib/components/ui/field'
-	import * as Form from '$lib/components/ui/form'
-	import { Textarea } from '$lib/components/ui/textarea'
 
 	const form = superForm(defaults(zod4(commentSchema)), {
 		SPA: true,

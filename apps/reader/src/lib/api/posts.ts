@@ -1,5 +1,5 @@
-import type { Post } from '$lib/types/posts'
-import { toQueryString } from '$lib/utils/api'
+import type { Post } from '#lib/types/posts.js'
+import { toQueryString } from '#lib/utils/api.js'
 import type { Request } from '.'
 
 interface GetPostsResponse {
