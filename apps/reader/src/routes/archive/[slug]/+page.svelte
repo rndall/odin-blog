@@ -38,6 +38,10 @@
 
 		{#if auth.isAuthenticated}
 			<CommentForm />
+		{:else}
+			<p>
+				<a href="/sign-in" class="text-primary underline">Sign in</a> to leave a comment.
+			</p>
 		{/if}
 
 		{#snippet commentItem(comment: PostComment)}
